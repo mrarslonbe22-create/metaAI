@@ -1,7 +1,7 @@
 {
   "name": "mathai-server",
   "version": "1.0.0",
-  "description": "MathAI - Sun'iy intellekt yordamida matematikani o'rganish",
+  "description": "MathAI - Sun'iy intellekt yordamida matematikani o'rganish (Abituriyentlar uchun)",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -14,5 +14,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
-  }
+  },
+  "keywords": ["math", "ai", "education", "uzbekistan", "abiturient"],
+  "author": "MathAI Team",
+  "license": "MIT"
 }
