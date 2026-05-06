@@ -94,7 +94,31 @@
             display: flex;
             min-height: 100vh;
         }
+<!-- Registratsiya sahifasi -->
+<div id="registrationSection" class="page active">
+    <div class="hero-section" style="max-width:500px; margin:50px auto;">
+        <i class="fas fa-brain" style="font-size:64px; color:#4f46e5;"></i>
+        <h1>MathAI</h1>
+        <p>Sun'iy intellekt yordamida matematikani o'rganing</p>
+        
+        <div class="input-group">
+            <label>Ismingiz</label>
+            <input type="text" id="regFirstName" placeholder="Ismingizni kiriting">
+        </div>
+        <div class="input-group">
+            <label>Familiyangiz</label>
+            <input type="text" id="regLastName" placeholder="Familiyangizni kiriting">
+        </div>
+        <button class="btn btn-primary" onclick="startTest()" style="width:100%;">
+            <i class="fas fa-rocket"></i> Boshlash
+        </button>
+    </div>
+</div>
 
+<!-- Asosiy sahifa (yashirin) -->
+<div id="mainAppSection" style="display:none;">
+    <!-- Bu yerda oldingi sidebar va boshqa qismlar -->
+</div>
         /* Sidebar */
         .sidebar {
             width: 280px;
