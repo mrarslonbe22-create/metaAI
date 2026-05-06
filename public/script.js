@@ -192,86 +192,277 @@ class UserProfile {
     }
 }
 
-// ============= SAVOL YARATISH =============
-function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
+// ============= SAVOL YARATISH (to'liq versiya) =============
 function generateQuestionForTopic(topic, userLevel) {
-    const difficulty = Math.min(10, Math.max(1, userLevel + (topic.difficulty - 5)));
+    const difficulty = Math.min(10, Math.max(1, Math.round(topic.difficulty * (userLevel / 5))));
     const topicName = topic.name;
     let question = { text: "", answer: 0, topic: topicName };
     
     switch(topicName) {
+        // 1. Butun sonlar
         case "Butun sonlar":
             if (difficulty <= 3) {
                 let a = randomInt(10, 50);
                 let b = randomInt(10, 50);
-                question.text = `${a} + ${b}`;
-                question.answer = a + b;
+                let op = randomInt(0, 1) ? '+' : '-';
+                if (op === '+') {
+                    question.text = `${a} + ${b}`;
+                    question.answer = a + b;
+                } else {
+                    if (a < b) [a, b] = [b, a];
+                    question.text = `${a} - ${b}`;
+                    question.answer = a - b;
+                }
             } else if (difficulty <= 7) {
-                let a = randomInt(50, 200);
-                let b = randomInt(50, 200);
-                question.text = `${a} + ${b}`;
-                question.answer = a + b;
+                let a = randomInt(50, 500);
+                let b = randomInt(50, 500);
+                let op = randomInt(0, 1) ? '+' : '-';
+                if (op === '+') {
+                    question.text = `${a} + ${b}`;
+                    question.answer = a + b;
+                } else {
+                    if (a < b) [a, b] = [b, a];
+                    question.text = `${a} - ${b}`;
+                    question.answer = a - b;
+                }
             } else {
-                let a = randomInt(500, 2000);
-                let b = randomInt(500, 2000);
-                question.text = `${a} + ${b}`;
-                question.answer = a + b;
+                let a = randomInt(500, 5000);
+                let b = randomInt(500, 5000);
+                let op = randomInt(0, 1) ? '+' : '-';
+                if (op === '+') {
+                    question.text = `${a} + ${b}`;
+                    question.answer = a + b;
+                } else {
+                    if (a < b) [a, b] = [b, a];
+                    question.text = `${a} - ${b}`;
+                    question.answer = a - b;
+                }
             }
             break;
+
+        // 2. Kasrlar
+        case "Kasrlar":
+            let a = randomInt(1, 10);
+            let b = randomInt(2, 12);
+            let c = randomInt(1, 10);
+            let d = randomInt(2, 12);
+            let op = randomInt(0, 2);
+            if (op === 0) { // qo'shish
+                // a/b + c/d = (ad+bc)/bd
+                let numerator = a * d + b * c;
+                let denominator = b * d;
+                let gcdVal = gcd(numerator, denominator);
+                question.text = `${a}/${b} + ${c}/${d}`;
+                question.answer = Math.round((numerator / denominator) * 100) / 100;
+            } else if (op === 1) { // ayirish
+                let numerator = a * d - b * c;
+                let denominator = b * d;
+                if (numerator < 0) numerator = Math.abs(numerator);
+                question.text = `${a}/${b} - ${c}/${d}`;
+                question.answer = Math.round((numerator / denominator) * 100) / 100;
+            } else { // ko'paytirish
+                let numerator = a * c;
+                let denominator = b * d;
+                question.text = `${a}/${b} × ${c}/${d}`;
+                question.answer = Math.round((numerator / denominator) * 100) / 100;
+            }
+            break;
+
+        // 3. Foizlar
+        case "Foizlar":
+            let total = randomInt(100, 500);
+            let percent = randomInt(10, 50);
+            question.text = `${percent}% of ${total}`;
+            question.answer = (percent * total) / 100;
+            break;
+
+        // 4. Daraja
+        case "Daraja":
+            let base = randomInt(2, 8);
+            let exp = randomInt(2, 4);
+            question.text = `${base}^${exp}`;
+            question.answer = Math.pow(base, exp);
+            break;
+
+        // 5. Ildiz
         case "Ildiz":
-            if (difficulty <= 3) {
-                let perfectSquares = [4, 9, 16, 25, 36, 49, 64, 81, 100];
-                let val = perfectSquares[randomInt(0, perfectSquares.length-1)];
-                question.text = `√${val}`;
-                question.answer = Math.sqrt(val);
-            } else if (difficulty <= 7) {
-                let val = randomInt(100, 400);
-                question.text = `√${val}`;
-                question.answer = Math.round(Math.sqrt(val));
-            } else {
-                let val = randomInt(400, 1000);
-                question.text = `√${val}`;
-                question.answer = Math.round(Math.sqrt(val) * 10) / 10;
-            }
+            let perfectSquares = [4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400];
+            let idx = randomInt(0, perfectSquares.length - 1);
+            let val = perfectSquares[idx];
+            question.text = `√${val}`;
+            question.answer = Math.sqrt(val);
             break;
-        case "Logarifm (asosiy)":
-            let base = randomInt(2, 5);
-            let power = randomInt(2, 4);
-            let value = Math.pow(base, power);
-            question.text = `log${base}(${value})`;
-            question.answer = power;
+
+        // 6. Proportsiya
+        case "Proportsiya":
+            let a1 = randomInt(2, 10);
+            let b1 = randomInt(2, 10);
+            let c1 = randomInt(2, 10);
+            // a1 : b1 = c1 : x  => x = (b1 * c1) / a1
+            let x = (b1 * c1) / a1;
+            question.text = `${a1} : ${b1} = ${c1} : x`;
+            question.answer = Math.round(x * 100) / 100;
             break;
+
+        // 7. Bir noma'lumli tenglama
+        case "Bir noma'lumli tenglama":
+            let a2 = randomInt(2, 10);
+            let b2 = randomInt(5, 20);
+            let c2 = randomInt(20, 50);
+            // ax + b = c  => x = (c - b)/a
+            let x1 = (c2 - b2) / a2;
+            question.text = `${a2}x + ${b2} = ${c2}`;
+            question.answer = Math.round(x1 * 100) / 100;
+            break;
+
+        // 8. Ikki noma'lumli tenglama
+        case "Ikki noma'lumli tenglama":
+            let xVal = randomInt(2, 8);
+            let yVal = randomInt(2, 8);
+            let eq1 = xVal + yVal;
+            let eq2 = xVal - yVal;
+            question.text = `x + y = ${eq1}, x - y = ${eq2}`;
+            question.answer = xVal;
+            break;
+
+        // 9. Kvadrat tenglama
         case "Kvadrat tenglama":
-            let root1 = randomInt(2, 8);
-            let root2 = randomInt(2, 8);
+            let root1 = randomInt(2, 6);
+            let root2 = randomInt(2, 6);
             let bVal = -(root1 + root2);
             let cVal = root1 * root2;
             question.text = `x² ${bVal >= 0 ? '+' : ''}${bVal}x ${cVal >= 0 ? '+' : ''}${cVal} = 0`;
             question.answer = Math.min(root1, root2);
             break;
+
+        // 10. Kvadrat funksiya (tepa nuqta)
+        case "Kvadrat funksiya":
+            let a3 = randomInt(1, 3);
+            let b3 = -randomInt(4, 12);
+            let c3 = randomInt(1, 10);
+            // y = ax² + bx + c, tepa nuqta x = -b/(2a)
+            let vertexX = -b3 / (2 * a3);
+            question.text = `y = ${a3}x² ${b3 >= 0 ? '+' : ''}${b3}x ${c3 >= 0 ? '+' : ''}${c3} ning tepa nuqtasining x koordinatasi?`;
+            question.answer = Math.round(vertexX * 10) / 10;
+            break;
+
+        // 11. Logarifm (asosiy)
+        case "Logarifm (asosiy)":
+            let logBase = randomInt(2, 5);
+            let logPower = randomInt(2, 4);
+            let logValue = Math.pow(logBase, logPower);
+            question.text = `log${logBase}(${logValue})`;
+            question.answer = logPower;
+            break;
+
+        // 12. Logarifmik tenglama
+        case "Logarifmik tenglama":
+            let lb = randomInt(2, 4);
+            let lp = randomInt(2, 4);
+            let lv = Math.pow(lb, lp);
+            question.text = `log${lb}(x) = ${lp}`;
+            question.answer = lv;
+            break;
+
+        // 13-14. Trigonometriya
+        case "Trigonometriya (sin, cos)":
+            let angles = [0, 30, 45, 60, 90];
+            let angle = angles[randomInt(0, angles.length - 1)];
+            let trigFunc = randomInt(0, 1) ? 'sin' : 'cos';
+            let rad = angle * Math.PI / 180;
+            let trigValue = trigFunc === 'sin' ? Math.sin(rad) : Math.cos(rad);
+            question.text = `${trigFunc}(${angle}°)`;
+            question.answer = Math.round(trigValue * 100) / 100;
+            break;
+
+        case "Trigonometrik tenglama":
+            let targetAngle = [30, 45, 60][randomInt(0, 2)];
+            let targetRad = targetAngle * Math.PI / 180;
+            let targetSin = Math.sin(targetRad);
+            question.text = `sin(x) = ${targetSin}`;
+            question.answer = targetAngle;
+            break;
+
+        // 15. Arifmetik progressiya
+        case "Arifmetik progressiya":
+            let a1_ap = randomInt(2, 10);
+            let d = randomInt(2, 5);
+            let n = randomInt(3, 8);
+            let an = a1_ap + (n - 1) * d;
+            question.text = `a₁ = ${a1_ap}, d = ${d}, a_${n} = ?`;
+            question.answer = an;
+            break;
+
+        // 16. Geometrik progressiya
+        case "Geometrik progressiya":
+            let a1_gp = randomInt(2, 5);
+            let q = randomInt(2, 4);
+            let n_gp = randomInt(3, 6);
+            let gn = a1_gp * Math.pow(q, n_gp - 1);
+            question.text = `a₁ = ${a1_gp}, q = ${q}, a_${n_gp} = ?`;
+            question.answer = gn;
+            break;
+
+        // 17. Limit
+        case "Limit":
+            let limitX = randomInt(2, 5);
+            let limitVal = 2 * limitX;
+            question.text = `lim(x→${limitX}) (x² - ${limitX*limitX})/(x - ${limitX})`;
+            question.answer = 2 * limitX;
+            break;
+
+        // 18. Hosila
+        case "Hosila":
+            let power = randomInt(2, 4);
+            let coeff = randomInt(2, 5);
+            question.text = `f(x) = ${coeff}x^${power}, f'(x) = ? (x = ${randomInt(1,3)} da)`;
+            question.answer = coeff * power * Math.pow(randomInt(1,3), power - 1);
+            break;
+
+        // 19. Integral (asosiy)
+        case "Integral (asosiy)":
+            let intPower = randomInt(2, 4);
+            question.text = `∫ x^${intPower} dx`;
+            question.answer = Math.round(Math.pow(2, intPower + 1) / (intPower + 1));
+            break;
+
+        // 20. Aniq integral
+        case "Aniq integral":
+            let a_int = randomInt(0, 1);
+            let b_int = randomInt(2, 3);
+            let intPower2 = randomInt(1, 2);
+            let integralVal = (Math.pow(b_int, intPower2 + 1) - Math.pow(a_int, intPower2 + 1)) / (intPower2 + 1);
+            question.text = `∫${a_int}${b_int} x^${intPower2} dx`;
+            question.answer = Math.round(integralVal * 100) / 100;
+            break;
+
+        // Default
         default:
-            question.text = `${randomInt(10, 50)} + ${randomInt(10, 50)}`;
-            question.answer = eval(question.text);
+            let defaultA = randomInt(10, 50);
+            let defaultB = randomInt(10, 50);
+            question.text = `${defaultA} + ${defaultB}`;
+            question.answer = defaultA + defaultB;
     }
+    
     return question;
 }
 
-function generateTestQuestions() {
-    currentQuestions = [];
-    currentAnswers = [];
-    const difficultyMultiplier = Math.min(2, Math.max(0.5, currentUser.level / 5));
-    
-    for (let i = 0; i < TOPICS.length; i++) {
-        const topic = TOPICS[i];
-        let question = generateQuestionForTopic(topic, currentUser.level);
-        currentQuestions.push(question);
-        currentAnswers.push(question.answer);
+// GCD (Eng katta umumiy bo'luvchi) - kasrlar uchun
+function gcd(a, b) {
+    a = Math.abs(a);
+    b = Math.abs(b);
+    while (b !== 0) {
+        let temp = b;
+        b = a % b;
+        a = temp;
     }
+    return a;
 }
 
+// Random int helper
+function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 // ============= TEST FUNKSIYALARI =============
 function initTest() {
     const firstName = document.getElementById("firstName").value.trim();
