@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MathAI | Abituriyentlar uchun sun'iy intellekt yordamida matematika</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Navigatsiya -->
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <span>MathAI</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-page="home">
+                    <i class="fas fa-home"></i>
+                    <span>Bosh sahifa</span>
+                </a>
+                <a href="#" class="nav-item" data-page="test">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <span>Test</span>
+                </a>
+                <a href="#" class="nav-item" data-page="statistics">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Statistika</span>
+                </a>
+                <a href="#" class="nav-item" data-page="lessons">
+                    <i class="fas fa-book"></i>
+                    <span>Darslar</span>
+                </a>
+                <a href="#" class="nav-item" data-page="ai">
+                    <i class="fas fa-robot"></i>
+                    <span>AI yordamchi</span>
+                </a>
+            </nav>
+            <div class="user-info" id="userInfoSidebar">
+                <div class="avatar">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <div class="user-details">
+                    <span class="user-name" id="sidebarUserName">Guest</span>
+                    <span class="user-level" id="sidebarUserLevel">🎯 Daraja 1</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Asosiy content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 id="pageTitle">MathAI</h2>
+                <div class="header-actions">
+                    <button class="icon-btn" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="icon-btn" id="notifications">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page: Home -->
+            <div id="homePage" class="page active">
+                <div class="hero-section">
+                    <h1>🧠 MathAI bilan <span class="gradient-text">bilimingizni</span> oshiring</h1>
+                    <p>Sun'iy intellekt yordamida matematikani individuallashtirilgan tarzda o'rganing. 20 ta mavzu, adaptiv testlar va smart yordamchi.</p>
+                    <button class="btn btn-primary btn-large" onclick="switchToPage('test')">
+                        <i class="fas fa-play"></i> Testni boshlash
+                    </button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-tasks"></i>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalTestsCount">0</span>
+                            <span class="stat-label">Bajarilgan testlar</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-star"></i>
+                        <div class="stat-info">
+                            <span class="stat-value" id="avgScorePercent">0%</span>
+                            <span class="stat-label">O'rtacha natija</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-chart-simple"></i>
+                        <div class="stat-info">
+                            <span class="stat-value" id="currentLevel">1</span>
+                            <span class="stat-label">Sizning darajangiz</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-fire"></i>
+                        <div class="stat-info">
+                            <span class="stat-value" id="streakDays">0</span>
+                            <span class="stat-label">Kunlik streak</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topics-preview">
+                    <h3><i class="fas fa-layer-group"></i> 20 ta mavzu</h3>
+                    <div class="topics-grid" id="topicsGrid"></div>
+                </div>
+            </div>
+
+            <!-- Page: Test (20 savol) -->
+            <div id="testPage" class="page">
+                <!-- Login / Start section -->
+                <div id="testStartSection" class="card">
+                    <h2><i class="fas fa-user-plus"></i> Testni boshlash</h2>
+                    <p>Ism va familiyangizni kiriting. Test 15 daqiqa davom etadi va 20 ta savoldan iborat.</p>
+                    <div class="input-group">
+                        <label><i class="fas fa-user"></i> Ism</label>
+                        <input type="text" id="firstName" placeholder="Ismingiz">
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-user-tie"></i> Familiya</label>
+                        <input type="text" id="lastName" placeholder="Familiyangiz">
+                    </div>
+                    <button class="btn btn-primary" onclick="initTest()">
+                        <i class="fas fa-rocket"></i> Testni boshlash
+                    </button>
+                </div>
+
+                <!-- Test active section -->
+                <div id="testActiveSection" style="display:none;">
+                    <div class="test-header">
+                        <div class="timer-box">
+                            <i class="fas fa-hourglass-half"></i>
+                            <span id="timer">15:00</span>
+                        </div>
+                        <div class="progress-info">
+                            <span id="questionCounter">1</span> / <span id="totalQuestions">20</span>
+                            <div class="progress-bar">
+                                <div id="testProgressBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="level-indicator" id="testLevelBadge">
+                            <i class="fas fa-chart-line"></i> Daraja: <span id="currentLevelBadge">1</span>
+                        </div>
+                    </div>
+
+                    <div class="question-container" id="questionContainer">
+                        <!-- Dinamik savollar -->
+                    </div>
+
+                    <div class="test-actions">
+                        <button class="btn btn-primary" id="submitAnswerBtn" onclick="submitAnswer()">
+                            <i class="fas fa-check"></i> Javobni tekshirish
+                        </button>
+                        <button class="btn btn-outline" onclick="skipQuestion()">
+                            <i class="fas fa-forward"></i> O'tkazib yuborish
+                        </button>
+                    </div>
+
+                    <!-- Tushuntirish qismi -->
+                    <div id="explanationBox" class="explanation-box" style="display:none;">
+                        <div class="explanation-header">
+                            <i class="fas fa-graduation-cap"></i>
+                            <h4>Mavzu tushuntirishi</h4>
+                            <button class="close-explanation" onclick="closeExplanation()">&times;</button>
+                        </div>
+                        <div id="explanationContent"></div>
+                    </div>
+                </div>
+
+                <!-- Test result section -->
+                <div id="testResultSection" style="display:none;">
+                    <div class="result-card">
+                        <div class="result-icon" id="resultIcon">🎉</div>
+                        <h2 id="resultGreeting"></h2>
+                        <div class="score-display">
+                            <span class="score-number" id="resultScore">0</span>
+                            <span class="score-total">/20</span>
+                        </div>
+                        <div class="score-percentage" id="resultPercentage">0%</div>
+                        <div class="result-details" id="resultDetails"></div>
+                        <div class="weak-topics" id="weakTopicsList"></div>
+                        <div class="result-actions">
+                            <button class="btn btn-primary" onclick="restartTest()">
+                                <i class="fas fa-redo"></i> Yangi test
+                            </button>
+                            <button class="btn btn-outline" onclick="switchToPage('lessons')">
+                                <i class="fas fa-book-open"></i> Darslarni o'rganish
+                            </button>
+                        </div>
+                        <div id="aiAdviceResult"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page: Statistics -->
+            <div id="statisticsPage" class="page">
+                <h2><i class="fas fa-chart-simple"></i> Mening statistikam</h2>
+                <div class="stats-dashboard">
+                    <div class="chart-card">
+                        <h3>Mavzular bo'yicha o'zlashtirish</h3>
+                        <canvas id="topicsChart" width="400" height="300"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Test natijalari dinamikasi</h3>
+                        <canvas id="trendChart" width="400" height="300"></canvas>
+                    </div>
+                </div>
+                <div class="recent-tests">
+                    <h3>So'nggi testlar</h3>
+                    <div id="recentTestsList"></div>
+                </div>
+            </div>
+
+            <!-- Page: Lessons -->
+            <div id="lessonsPage" class="page">
+                <h2><i class="fas fa-book"></i> Mavzular va formulalar</h2>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="lessonSearch" placeholder="Mavzu qidirish..." oninput="filterLessons()">
+                </div>
+                <div class="lessons-grid" id="lessonsGrid"></div>
+            </div>
+
+            <!-- Page: AI Assistant -->
+            <div id="aiPage" class="page">
+                <h2><i class="fas fa-robot"></i> AI yordamchi</h2>
+                <div class="ai-chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message bot">
+                            <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                            <div class="message-content">
+                                <p>Salom! Men MathAI sun'iy intellekt yordamchisiman. Matematikadan istalgan savolingizga javob beraman. Masalan: "Kvadrat tenglamani qanday yechaman?" yoki "sin 45° qancha?"</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <textarea id="chatInput" placeholder="Savolingizni yozing..." rows="2"></textarea>
+                        <button class="btn btn-primary" onclick="sendChatMessage()">
+                            <i class="fas fa-paper-plane"></i> Yuborish
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
