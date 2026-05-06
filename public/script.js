@@ -1,8 +1,7 @@
-// ============= API SOZLAMALARI =============
-const API_KEY = "prj_tgEaBqyCUxAwuz9cSFdOuadn44bd";
-const API_URL = "https://api.openai.com/v1/chat/completions";
+// ============= API SOZLAMALARI (Backend orqali) =============
+const API_BASE = window.location.origin; // http://localhost:3000 yoki production URL
 
-// ============= 20 TA MAVZU VA SAVOLLAR (osondan qiyin sari) =============
+// ============= 20 TA MAVZU (o'zgarishsiz) =============
 const TOPICS = [
     { name: "Butun sonlar", difficulty: 1, formula: "a + b = c", example: "25 + 17 = 42" },
     { name: "Kasrlar", difficulty: 2, formula: "a/b + c/d = (ad+bc)/bd", example: "1/2 + 1/3 = 5/6" },
@@ -26,8 +25,8 @@ const TOPICS = [
     { name: "Aniq integral", difficulty: 10, formula: "∫_a^b f(x)dx = F(b)-F(a)", example: "∫₀¹ x² dx = 1/3" }
 ];
 
-// Har bir mavzu uchun tushuntirishlar
-const EXPLANATIONS = TOPICS.reduce((acc, topic, idx) => {
+// ============= TUSHUNTIRISHLAR =============
+const EXPLANATIONS = TOPICS.reduce((acc, topic) => {
     acc[topic.name] = {
         title: topic.name,
         formula: topic.formula,
@@ -43,7 +42,7 @@ function getDetailedExplanation(topicName) {
         "Logarifm (asosiy)": "Logarifm - darajaning teskari funksiyasi. log_a(b) = c degani a^c = b. Masalan: log₂(8) = 3, chunki 2³ = 8.",
         "Daraja": "Daraja - sonning o'ziga necha marta ko'paytirilishi. aⁿ = a × a × ... × a (n marta).",
         "Kvadrat tenglama": "Kvadrat tenglama ax² + bx + c = 0 ko'rinishida bo'ladi. Yechim: x = [-b ± √(b²-4ac)] / 2a",
-        "Trigonometriya": "Sin, cos, tan - to'g'ri burchakli uchburchak tomonlari nisbati. sin(α)=qarama-qarshi/gipotenuza, cos(α)=yopishgan/gipotenuza",
+        "Trigonometriya (sin, cos)": "Sin, cos, tan - to'g'ri burchakli uchburchak tomonlari nisbati. sin(α)=qarama-qarshi/gipotenuza, cos(α)=yopishgan/gipotenuza",
         "Limit": "Limit - funksiyaning biror nuqtaga yaqinlashgandagi qiymati. lim(x→a) f(x) = L",
         "Hosila": "Hosila - funksiyaning o'zgarish tezligi. f'(x) = df/dx",
         "Integral": "Integral - yuzani hisoblash. Hosilaning teskarisi."
@@ -59,7 +58,7 @@ let currentQuestionIndex = 0;
 let userScore = 0;
 let userAnswers = [];
 let timerInterval = null;
-let timeLeft = 900; // 15 minut = 900 sekund
+let timeLeft = 900;
 
 class UserProfile {
     constructor(firstName, lastName) {
@@ -91,7 +90,6 @@ class UserProfile {
             this.lastTestDate = data.lastTestDate || null;
         }
         
-        // Initialize topic mastery
         TOPICS.forEach(topic => {
             if (!this.topicMastery[topic.name]) {
                 this.topicMastery[topic.name] = { correct: 0, wrong: 0, level: 1 };
@@ -132,7 +130,6 @@ class UserProfile {
             this.topicMastery[topicName].level = Math.max(1, this.topicMastery[topicName].level - 0.2);
         }
         
-        // Update global level
         let totalLevel = 0;
         let count = 0;
         for (let topic in this.topicMastery) {
@@ -140,7 +137,6 @@ class UserProfile {
             count++;
         }
         this.level = Math.round(totalLevel / count);
-        
         this.saveProgress();
     }
     
@@ -178,10 +174,8 @@ class UserProfile {
             timeSpent: timeSpent
         });
         
-        // Keep only last 20 tests
         if (this.testHistory.length > 20) this.testHistory.pop();
         
-        // Update streak
         const today = new Date().toDateString();
         if (this.lastTestDate !== today) {
             const yesterday = new Date();
@@ -193,17 +187,19 @@ class UserProfile {
             }
             this.lastTestDate = today;
         }
-        
         this.saveProgress();
         this.updateUI();
     }
 }
 
-// ============= SAVOL YARATISH (darajaga qarab) =============
+// ============= SAVOL YARATISH =============
+function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function generateQuestionForTopic(topic, userLevel) {
     const difficulty = Math.min(10, Math.max(1, userLevel + (topic.difficulty - 5)));
     const topicName = topic.name;
-    
     let question = { text: "", answer: 0, topic: topicName };
     
     switch(topicName) {
@@ -225,7 +221,6 @@ function generateQuestionForTopic(topic, userLevel) {
                 question.answer = a + b;
             }
             break;
-            
         case "Ildiz":
             if (difficulty <= 3) {
                 let perfectSquares = [4, 9, 16, 25, 36, 49, 64, 81, 100];
@@ -242,7 +237,6 @@ function generateQuestionForTopic(topic, userLevel) {
                 question.answer = Math.round(Math.sqrt(val) * 10) / 10;
             }
             break;
-            
         case "Logarifm (asosiy)":
             let base = randomInt(2, 5);
             let power = randomInt(2, 4);
@@ -250,7 +244,6 @@ function generateQuestionForTopic(topic, userLevel) {
             question.text = `log${base}(${value})`;
             question.answer = power;
             break;
-            
         case "Kvadrat tenglama":
             let root1 = randomInt(2, 8);
             let root2 = randomInt(2, 8);
@@ -259,33 +252,21 @@ function generateQuestionForTopic(topic, userLevel) {
             question.text = `x² ${bVal >= 0 ? '+' : ''}${bVal}x ${cVal >= 0 ? '+' : ''}${cVal} = 0`;
             question.answer = Math.min(root1, root2);
             break;
-            
         default:
-            // Default simple addition
             question.text = `${randomInt(10, 50)} + ${randomInt(10, 50)}`;
             question.answer = eval(question.text);
     }
-    
     return question;
 }
 
-function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-// Generate 20 questions based on user level
 function generateTestQuestions() {
     currentQuestions = [];
     currentAnswers = [];
-    
-    // Determine difficulty multiplier based on user level
     const difficultyMultiplier = Math.min(2, Math.max(0.5, currentUser.level / 5));
     
     for (let i = 0; i < TOPICS.length; i++) {
         const topic = TOPICS[i];
-        let questionLevel = Math.min(10, Math.max(1, Math.round(topic.difficulty * difficultyMultiplier)));
-        
-        let question = generateQuestionForTopic(topic, questionLevel);
+        let question = generateQuestionForTopic(topic, currentUser.level);
         currentQuestions.push(question);
         currentAnswers.push(question.answer);
     }
@@ -302,21 +283,15 @@ function initTest() {
     }
     
     currentUser = new UserProfile(firstName, lastName);
-    
-    // Generate questions based on user level
     generateTestQuestions();
-    
     currentQuestionIndex = 0;
     userScore = 0;
     userAnswers = [];
-    timeLeft = 900; // 15 minutes
+    timeLeft = 900;
     
-    // Hide start section, show test section
     document.getElementById("testStartSection").style.display = "none";
     document.getElementById("testActiveSection").style.display = "block";
     document.getElementById("testResultSection").style.display = "none";
-    
-    // Update UI
     document.getElementById("totalQuestions").innerText = TOPICS.length;
     document.getElementById("currentLevelBadge").innerText = currentUser.level;
     
@@ -326,7 +301,6 @@ function initTest() {
 
 function startTimer() {
     if (timerInterval) clearInterval(timerInterval);
-    
     timerInterval = setInterval(() => {
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
@@ -345,13 +319,9 @@ function updateTimerDisplay() {
     if (timerElement) {
         timerElement.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
-    
-    // Update progress bar
     const progressPercent = (currentQuestionIndex / TOPICS.length) * 100;
     const progressBar = document.getElementById("testProgressBar");
-    if (progressBar) {
-        progressBar.style.width = `${progressPercent}%`;
-    }
+    if (progressBar) progressBar.style.width = `${progressPercent}%`;
 }
 
 function showCurrentQuestion() {
@@ -362,7 +332,6 @@ function showCurrentQuestion() {
     
     const question = currentQuestions[currentQuestionIndex];
     const container = document.getElementById("questionContainer");
-    
     container.innerHTML = `
         <div class="question-text">
             <strong>${currentQuestionIndex + 1}-savol (${question.topic || TOPICS[currentQuestionIndex].name})</strong><br>
@@ -370,15 +339,39 @@ function showCurrentQuestion() {
         </div>
         <input type="number" id="currentAnswer" class="question-input" placeholder="Javobingizni yozing" step="any">
     `;
-    
     document.getElementById("questionCounter").innerText = currentQuestionIndex + 1;
     document.getElementById("explanationBox").style.display = "none";
-    
-    // Focus on input
     setTimeout(() => {
         const input = document.getElementById("currentAnswer");
         if (input) input.focus();
     }, 100);
+}
+
+function showToast(message, type) {
+    const toast = document.createElement("div");
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+
+function showExplanation(topicName) {
+    const explanation = EXPLANATIONS[topicName];
+    if (!explanation) return;
+    const explanationBox = document.getElementById("explanationBox");
+    const explanationContent = document.getElementById("explanationContent");
+    explanationContent.innerHTML = `
+        <h4>📘 ${explanation.title}</h4>
+        <p><strong>Formula:</strong> ${explanation.formula}</p>
+        <p><strong>Misol:</strong> ${explanation.example}</p>
+        <p><strong>Tushuntirish:</strong> ${explanation.explanation}</p>
+        <button class="btn btn-sm btn-primary" onclick="closeExplanation()" style="margin-top:10px">Tushunildi</button>
+    `;
+    explanationBox.style.display = "block";
+}
+
+function closeExplanation() {
+    document.getElementById("explanationBox").style.display = "none";
 }
 
 function submitAnswer() {
@@ -393,7 +386,6 @@ function submitAnswer() {
     }
     
     const isCorrect = Math.abs(userAnswer - correctAnswer) < 0.01;
-    
     userAnswers.push({
         question: currentQuestions[currentQuestionIndex],
         userAnswer: userAnswer,
@@ -413,7 +405,6 @@ function submitAnswer() {
     }
     
     currentQuestionIndex++;
-    
     if (currentQuestionIndex >= TOPICS.length) {
         finishTest();
     } else {
@@ -431,13 +422,10 @@ function skipQuestion() {
         topic: currentTopic,
         skipped: true
     });
-    
     currentUser.updateTopicMastery(currentTopic, false);
     showToast("⏭ Savol o'tkazib yuborildi", "warning");
     showExplanation(currentTopic);
-    
     currentQuestionIndex++;
-    
     if (currentQuestionIndex >= TOPICS.length) {
         finishTest();
     } else {
@@ -445,45 +433,19 @@ function skipQuestion() {
     }
 }
 
-function showExplanation(topicName) {
-    const explanation = EXPLANATIONS[topicName];
-    if (!explanation) return;
-    
-    const explanationBox = document.getElementById("explanationBox");
-    const explanationContent = document.getElementById("explanationContent");
-    
-    explanationContent.innerHTML = `
-        <h4>📘 ${explanation.title}</h4>
-        <p><strong>Formula:</strong> ${explanation.formula}</p>
-        <p><strong>Misol:</strong> ${explanation.example}</p>
-        <p><strong>Tushuntirish:</strong> ${explanation.explanation}</p>
-        <button class="btn btn-sm btn-primary" onclick="closeExplanation()" style="margin-top:10px">Tushunildi</button>
-    `;
-    
-    explanationBox.style.display = "block";
-}
-
-function closeExplanation() {
-    document.getElementById("explanationBox").style.display = "none";
-}
-
 function finishTest() {
     clearInterval(timerInterval);
-    
     const timeSpent = 900 - timeLeft;
     const weakTopics = [];
     
     userAnswers.forEach(answer => {
         if (!answer.isCorrect && !answer.skipped) {
-            if (!weakTopics.includes(answer.topic)) {
-                weakTopics.push(answer.topic);
-            }
+            if (!weakTopics.includes(answer.topic)) weakTopics.push(answer.topic);
         }
     });
     
     currentUser.addTestResult(userScore, TOPICS.length, weakTopics, timeSpent);
     
-    // Save to localStorage for admin
     const results = JSON.parse(localStorage.getItem("mathai_results")) || [];
     results.push({
         id: Date.now(),
@@ -496,7 +458,6 @@ function finishTest() {
     });
     localStorage.setItem("mathai_results", JSON.stringify(results));
     
-    // Show result
     document.getElementById("testActiveSection").style.display = "none";
     document.getElementById("testResultSection").style.display = "block";
     
@@ -527,50 +488,38 @@ function finishTest() {
     } else {
         weakHtml = `<p class="success-text">🎉 A'lo! Barcha mavzularni o'zlashtirgansiz!</p>`;
     }
-    
     document.getElementById("weakTopicsList").innerHTML = weakHtml;
     document.getElementById("resultDetails").innerHTML = `<p>⏱ Sarflangan vaqt: ${timeText}</p>`;
     
-    // Get AI advice
     getAIAdvice(weakTopics, percent);
-    
-    // Update statistics page
     updateStatisticsPage();
 }
 
-function getAIAdvice(weakTopics, percent) {
+async function getAIAdvice(weakTopics, percent) {
     const adviceDiv = document.getElementById("aiAdviceResult");
     adviceDiv.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> AI maslahat olinmoqda...</div>';
     
-    let adviceText = "";
-    
-    if (percent >= 80) {
-        adviceText = "🎉 Siz matematikani juda yaxshi bilasiz! Keyingi bosqichga o'tishga tayyormisiz. Murakkabroq mavzularni o'rganishni tavsiya qilaman: limit, hosila, integral.";
-    } else if (percent >= 60) {
-        adviceText = `👍 Yaxshi natija! Asosan ${weakTopics.join(", ")} mavzularida biroz kamchiliklar bor. Ushbu mavzularni qayta o'rganib chiqishni tavsiya qilaman. Har bir mavzu uchun yuqoridagi tushuntirishlardan foydalaning.`;
-    } else if (percent >= 40) {
-        adviceText = `📚 O'rta daraja. ${weakTopics.join(", ")} mavzularini chuqurroq o'rganishingiz kerak. Har kuni kamida 30 daqiqa matematika bilan shug'ullanishni tavsiya qilaman. Formulalarni yod oling va ko'proq misollar yeching.`;
-    } else {
-        adviceText = `💪 Boshlang'ich daraja. Asosiy mavzulardan boshlang: ${weakTopics.join(", ")}. Avval formulalarni o'rganing, keyin oddiy misollardan boshlab asta-sekin murakkablashtiring. Sabr qiling, muvaffaqiyatga erishasiz!`;
+    try {
+        const response = await fetch(`${API_BASE}/api/advice`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ weakTopics: weakTopics, score: Math.round(percent / 5) })
+        });
+        const data = await response.json();
+        if (data.success) {
+            adviceDiv.innerHTML = `
+                <div class="ai-advice-card">
+                    <i class="fas fa-robot"></i>
+                    <div>
+                        <h4>🤖 AI Tavsiyasi</h4>
+                        <p>${data.advice}</p>
+                    </div>
+                </div>
+            `;
+        }
+    } catch (error) {
+        adviceDiv.innerHTML = `<div class="error">❌ AI maslahat olishda xatolik</div>`;
     }
-    
-    adviceDiv.innerHTML = `
-        <div class="ai-advice-card">
-            <i class="fas fa-robot"></i>
-            <div>
-                <h4>🤖 AI Tavsiyasi</h4>
-                <p>${adviceText}</p>
-            </div>
-        </div>
-    `;
-}
-
-function showToast(message, type) {
-    const toast = document.createElement("div");
-    toast.className = `toast toast-${type}`;
-    toast.innerHTML = message;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
 }
 
 function restartTest() {
@@ -581,59 +530,35 @@ function restartTest() {
     document.getElementById("lastName").value = "";
 }
 
-// ============= AI CHAT FUNKSIYASI =============
+// ============= AI CHAT (BACKEND ORQALI) =============
 async function sendChatMessage() {
     const input = document.getElementById("chatInput");
     const message = input.value.trim();
-    
     if (!message) return;
     
-    // Add user message
     addChatMessage(message, "user");
     input.value = "";
     
-    // Add loading message
     const loadingId = addChatMessage('<i class="fas fa-spinner fa-spin"></i> AI javob yozyapti...', "bot", true);
     
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(`${API_BASE}/api/ask`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${API_KEY}`
-            },
-            body: JSON.stringify({
-                model: "gpt-3.5-turbo",
-                messages: [
-                    {
-                        role: "system",
-                        content: "Siz MathAI matematika yordamchisisiz. Abituriyentlarga matematikadan yordam berasiz. Faqat matematik mavzularga javob bering. O'zbek tilida, tushunarli va batafsil javob bering."
-                    },
-                    {
-                        role: "user",
-                        content: message
-                    }
-                ],
-                temperature: 0.7,
-                max_tokens: 500
-            })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question: message })
         });
-        
         const data = await response.json();
-        const aiResponse = data.choices?.[0]?.message?.content || "Kechirasiz, javob berishda xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring.";
+        const aiResponse = data.answer || "Kechirasiz, javob topilmadi.";
         
-        // Replace loading message with actual response
         const loadingMessage = document.getElementById(loadingId);
         if (loadingMessage) {
             loadingMessage.querySelector(".message-content").innerHTML = `<p>${aiResponse}</p>`;
             loadingMessage.id = "";
         }
-        
     } catch (error) {
-        console.error("AI xatosi:", error);
         const loadingMessage = document.getElementById(loadingId);
         if (loadingMessage) {
-            loadingMessage.querySelector(".message-content").innerHTML = `<p>❌ Xatolik yuz berdi. Internet aloqasini tekshiring.</p>`;
+            loadingMessage.querySelector(".message-content").innerHTML = `<p>❌ Xatolik yuz berdi. Server aloqasini tekshiring.</p>`;
             loadingMessage.id = "";
         }
     }
@@ -644,47 +569,30 @@ function addChatMessage(content, sender, isTemp = false) {
     const messageDiv = document.createElement("div");
     messageDiv.className = `message ${sender}`;
     if (isTemp) messageDiv.id = "temp_" + Date.now();
-    
     messageDiv.innerHTML = `
         <div class="message-avatar"><i class="fas ${sender === 'user' ? 'fa-user' : 'fa-robot'}"></i></div>
         <div class="message-content"><p>${content}</p></div>
     `;
-    
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    
     return messageDiv.id;
 }
 
-// ============= STATISTIKA FUNKSIYALARI =============
+// ============= STATISTIKA =============
 function updateStatisticsPage() {
     if (!currentUser) return;
     
-    // Topics chart
     const topics = Object.keys(currentUser.topicMastery);
     const masteryLevels = topics.map(t => currentUser.topicMastery[t].level);
-    
     const topicsChart = document.getElementById("topicsChart");
     if (topicsChart) {
         new Chart(topicsChart, {
             type: 'bar',
-            data: {
-                labels: topics,
-                datasets: [{
-                    label: 'O'zlashtirish darajasi (1-10)',
-                    data: masteryLevels,
-                    backgroundColor: '#6366f1',
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: { y: { min: 0, max: 10 } }
-            }
+            data: { labels: topics, datasets: [{ label: 'O\'zlashtirish darajasi (1-10)', data: masteryLevels, backgroundColor: '#6366f1', borderRadius: 8 }] },
+            options: { responsive: true, scales: { y: { min: 0, max: 10 } } }
         });
     }
     
-    // Recent tests
     const recentTests = document.getElementById("recentTestsList");
     if (recentTests && currentUser.testHistory.length > 0) {
         recentTests.innerHTML = currentUser.testHistory.slice(0, 10).map(test => `
@@ -701,14 +609,12 @@ function updateStatisticsPage() {
 function updateLessonsPage() {
     const grid = document.getElementById("lessonsGrid");
     if (!grid) return;
-    
-    grid.innerHTML = TOPICS.map((topic, idx) => `
+    grid.innerHTML = TOPICS.map((topic) => `
         <div class="topic-card" onclick="showLesson('${topic.name}')">
             <i class="fas fa-book-open"></i>
             <h4>${topic.name}</h4>
             <small>Daraja: ${topic.difficulty}/10</small>
-            ${currentUser && currentUser.topicMastery[topic.name] ? 
-                `<span class="mastery-level">🎯 ${Math.round(currentUser.topicMastery[topic.name].level * 10)}%</span>` : ''}
+            ${currentUser && currentUser.topicMastery[topic.name] ? `<span class="mastery-level">🎯 ${Math.round(currentUser.topicMastery[topic.name].level * 10)}%</span>` : ''}
         </div>
     `).join('');
 }
@@ -716,10 +622,8 @@ function updateLessonsPage() {
 function showLesson(topicName) {
     const explanation = EXPLANATIONS[topicName];
     if (!explanation) return;
-    
     const explanationBox = document.getElementById("explanationBox");
     const explanationContent = document.getElementById("explanationContent");
-    
     if (explanationContent) {
         explanationContent.innerHTML = `
             <h4>📘 ${explanation.title}</h4>
@@ -752,66 +656,39 @@ function filterLessons() {
     });
 }
 
-// ============= PAGE NAVIGATION =============
+// ============= NAVIGATION =============
 function switchToPage(pageName) {
     document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
     document.getElementById(`${pageName}Page`).classList.add("active");
-    
     document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
     document.querySelector(`.nav-item[data-page="${pageName}"]`)?.classList.add("active");
     
-    const titles = {
-        home: "MathAI",
-        test: "Test topshirish",
-        statistics: "Mening statistikam",
-        lessons: "Darslar",
-        ai: "AI yordamchi"
-    };
+    const titles = { home: "MathAI", test: "Test topshirish", statistics: "Mening statistikam", lessons: "Darslar", ai: "AI yordamchi" };
     document.getElementById("pageTitle").innerText = titles[pageName] || "MathAI";
-    
     if (pageName === "lessons") updateLessonsPage();
     if (pageName === "statistics" && currentUser) updateStatisticsPage();
 }
 
-// ============= ADMIN FUNKSIYASI =============
 function goToAdmin() {
     const password = prompt("Admin parolini kiriting:");
-    if (password === "admin123") {
-        window.location.href = "admin.html";
-    } else {
-        alert("❌ Parol xato!");
-    }
+    if (password === "admin123") window.location.href = "admin.html";
+    else alert("❌ Parol xato!");
 }
 
-// ============= INITIALIZATION =============
+// ============= INIT =============
 document.addEventListener('DOMContentLoaded', () => {
-    // Load topics grid
     const topicsGrid = document.getElementById("topicsGrid");
     if (topicsGrid) {
-        topicsGrid.innerHTML = TOPICS.map(topic => `
-            <div class="topic-card" onclick="showLesson('${topic.name}')">
-                <i class="fas fa-chalkboard-user"></i>
-                <span>${topic.name}</span>
-            </div>
-        `).join('');
+        topicsGrid.innerHTML = TOPICS.map(topic => `<div class="topic-card" onclick="showLesson('${topic.name}')"><i class="fas fa-chalkboard-user"></i><span>${topic.name}</span></div>`).join('');
     }
     
-    // Menu toggle for mobile
     const menuToggle = document.getElementById("menuToggle");
     const sidebar = document.getElementById("sidebar");
-    if (menuToggle && sidebar) {
-        menuToggle.addEventListener("click", () => {
-            sidebar.classList.toggle("open");
-        });
-    }
+    if (menuToggle && sidebar) menuToggle.addEventListener("click", () => sidebar.classList.toggle("open"));
     
-    // Theme toggle
     const themeToggle = document.getElementById("themeToggle");
-    themeToggle?.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-    });
+    themeToggle?.addEventListener("click", () => document.body.classList.toggle("dark-mode"));
     
-    // Navigation
     document.querySelectorAll(".nav-item").forEach(item => {
         item.addEventListener("click", (e) => {
             e.preventDefault();
@@ -820,18 +697,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Check if user exists in localStorage
-    const lastUser = localStorage.getItem("mathai_last_user");
-    if (lastUser) {
-        const userData = JSON.parse(lastUser);
-        currentUser = new UserProfile(userData.firstName, userData.lastName);
-        currentUser.updateUI();
-    }
-    
     console.log("✅ MathAI tayyor!");
 });
-
-// Random int helper
-function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
