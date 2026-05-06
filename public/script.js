@@ -336,12 +336,15 @@ function gcd(a, b) {
     return a;
 }
 
-// ============= SAVOL YARATISH =============
+// ============= SAVOL YARATISH (TO'LIQ TUZATILGAN) =============
 function generateQuestionForTopic(topic, userLevel) {
     const topicName = topic.name;
     let question = { text: "", answer: 0, topic: topicName };
     
+    console.log("Yaratilayotgan mavzu:", topicName); // Debug uchun
+    
     switch(topicName) {
+        // 1. Butun sonlar
         case "Butun sonlar":
             let a = randomInt(10, 100);
             let b = randomInt(10, 100);
@@ -355,6 +358,8 @@ function generateQuestionForTopic(topic, userLevel) {
                 question.answer = a - b;
             }
             break;
+
+        // 2. Kasrlar
         case "Kasrlar":
             let n1 = randomInt(1, 8);
             let d1 = randomInt(2, 9);
@@ -379,24 +384,32 @@ function generateQuestionForTopic(topic, userLevel) {
                 question.answer = Math.round((rn / rd) * 100) / 100;
             }
             break;
+
+        // 3. Foizlar
         case "Foizlar":
             let total = randomInt(100, 500);
             let percent = randomInt(10, 50);
             question.text = `${percent}% of ${total}`;
             question.answer = (percent * total) / 100;
             break;
+
+        // 4. Daraja
         case "Daraja":
             let base = randomInt(2, 5);
             let exp = randomInt(2, 4);
             question.text = `${base}^${exp}`;
             question.answer = Math.pow(base, exp);
             break;
+
+        // 5. Ildiz
         case "Ildiz":
             let squares = [4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225];
             let val = squares[randomInt(0, squares.length - 1)];
             question.text = `√${val}`;
             question.answer = Math.sqrt(val);
             break;
+
+        // 6. Proportsiya
         case "Proportsiya":
             let a1 = randomInt(2, 8);
             let b1 = randomInt(2, 8);
@@ -405,6 +418,8 @@ function generateQuestionForTopic(topic, userLevel) {
             question.text = `${a1} : ${b1} = ${c1} : x`;
             question.answer = Math.round(xProp * 100) / 100;
             break;
+
+        // 7. Bir noma'lumli tenglama
         case "Bir noma'lumli tenglama":
             let a2 = randomInt(2, 5);
             let b2 = randomInt(3, 10);
@@ -413,30 +428,38 @@ function generateQuestionForTopic(topic, userLevel) {
             question.text = `${a2}x + ${b2} = ${c2}`;
             question.answer = Math.round(xEq * 100) / 100;
             break;
+
+        // 8. Ikki noma'lumli tenglama
         case "Ikki noma'lumli tenglama":
             let xVal = randomInt(2, 6);
             let yVal = randomInt(2, 6);
             let sum = xVal + yVal;
             let diff = xVal - yVal;
-            question.text = `x + y = ${sum}, x - y = ${diff} (x ni toping)`;
+            question.text = `x + y = ${sum}, x - y = ${diff}  (x ni toping)`;
             question.answer = xVal;
             break;
+
+        // 9. Kvadrat tenglama
         case "Kvadrat tenglama":
             let root1 = randomInt(2, 4);
             let root2 = randomInt(3, 5);
             let bQuad = -(root1 + root2);
             let cQuad = root1 * root2;
-            question.text = `x² ${bQuad >= 0 ? '+' : ''}${bQuad}x ${cQuad >= 0 ? '+' : ''}${cQuad} = 0 (kichik ildizni toping)`;
+            question.text = `x² ${bQuad >= 0 ? '+' : ''}${bQuad}x ${cQuad >= 0 ? '+' : ''}${cQuad} = 0 (kichik ildiz)`;
             question.answer = Math.min(root1, root2);
             break;
+
+        // 10. Kvadrat funksiya
         case "Kvadrat funksiya":
             let aQuad = randomInt(1, 2);
             let bQuadF = -randomInt(4, 8);
             let cQuadF = randomInt(1, 5);
             let vertexX = -bQuadF / (2 * aQuad);
-            question.text = `y = ${aQuad}x² ${bQuadF >= 0 ? '+' : ''}${bQuadF}x ${cQuadF >= 0 ? '+' : ''}${cQuadF} funksiyaning tepa nuqtasi x = ?`;
+            question.text = `y = ${aQuad}x² ${bQuadF >= 0 ? '+' : ''}${bQuadF}x ${cQuadF >= 0 ? '+' : ''}${cQuadF} ning tepa nuqtasi x = ?`;
             question.answer = Math.round(vertexX * 10) / 10;
             break;
+
+        // 11. Logarifm (asosiy)
         case "Logarifm (asosiy)":
             let logBase = randomInt(2, 4);
             let logPower = randomInt(2, 4);
@@ -444,13 +467,17 @@ function generateQuestionForTopic(topic, userLevel) {
             question.text = `log${logBase}(${logValue})`;
             question.answer = logPower;
             break;
+
+        // 12. Logarifmik tenglama (TUZATILGAN)
         case "Logarifmik tenglama":
             let lb = randomInt(2, 4);
             let lp = randomInt(2, 4);
             let lv = Math.pow(lb, lp);
-            question.text = `log${lb}(x) = ${lp}`;
+            question.text = `log${lb}(x) = ${lp}  (x = ?)`;
             question.answer = lv;
             break;
+
+        // 13. Trigonometriya (sin, cos)
         case "Trigonometriya (sin, cos)":
             let angles = [0, 30, 45, 60, 90];
             let angle = angles[randomInt(0, angles.length - 1)];
@@ -460,13 +487,17 @@ function generateQuestionForTopic(topic, userLevel) {
             question.text = `${trigFunc}(${angle}°)`;
             question.answer = Math.round(trigValue * 100) / 100;
             break;
+
+        // 14. Trigonometrik tenglama
         case "Trigonometrik tenglama":
             let targetAngle = [30, 45, 60][randomInt(0, 2)];
             let targetRad = targetAngle * Math.PI / 180;
             let targetSin = Math.sin(targetRad);
-            question.text = `sin(x) = ${targetSin} (0° < x < 90°, x = ?)`;
+            question.text = `sin(x) = ${targetSin} (0° < x < 90°)`;
             question.answer = targetAngle;
             break;
+
+        // 15. Arifmetik progressiya
         case "Arifmetik progressiya":
             let a1_ap = randomInt(2, 5);
             let d = randomInt(2, 4);
@@ -475,6 +506,8 @@ function generateQuestionForTopic(topic, userLevel) {
             question.text = `a₁ = ${a1_ap}, d = ${d}, a_${n_ap} = ?`;
             question.answer = an_ap;
             break;
+
+        // 16. Geometrik progressiya
         case "Geometrik progressiya":
             let a1_gp = randomInt(2, 4);
             let q = randomInt(2, 3);
@@ -483,12 +516,16 @@ function generateQuestionForTopic(topic, userLevel) {
             question.text = `a₁ = ${a1_gp}, q = ${q}, a_${n_gp} = ?`;
             question.answer = gn;
             break;
+
+        // 17. Limit
         case "Limit":
             let limX = randomInt(2, 4);
             let limAns = 2 * limX;
             question.text = `lim(x→${limX}) (x² - ${limX*limX})/(x - ${limX})`;
             question.answer = limAns;
             break;
+
+        // 18. Hosila
         case "Hosila":
             let pow = randomInt(2, 3);
             let coeff = randomInt(2, 4);
@@ -497,6 +534,8 @@ function generateQuestionForTopic(topic, userLevel) {
             question.text = `f(x) = ${coeff}x^${pow}, f'(${xValDer}) = ?`;
             question.answer = deriv;
             break;
+
+        // 19. Integral (asosiy)
         case "Integral (asosiy)":
             let intPow = randomInt(1, 2);
             let intX = randomInt(1, 2);
@@ -504,6 +543,8 @@ function generateQuestionForTopic(topic, userLevel) {
             question.text = `∫₀${intX} x^${intPow} dx = ?`;
             question.answer = Math.round(intVal * 100) / 100;
             break;
+
+        // 20. Aniq integral
         case "Aniq integral":
             let aInt = randomInt(0, 1);
             let bInt = randomInt(2, 3);
@@ -512,21 +553,18 @@ function generateQuestionForTopic(topic, userLevel) {
             question.text = `∫${aInt} to ${bInt} x^${intP} dx = ?`;
             question.answer = Math.round(integralVal * 100) / 100;
             break;
-        default:
-            question.text = `${randomInt(10, 50)} + ${randomInt(10, 50)}`;
-            question.answer = eval(question.text);
-    }
-    return question;
-}
 
-function generateTestQuestions() {
-    currentQuestions = [];
-    currentAnswers = [];
-    for (let i = 0; i < TOPICS.length; i++) {
-        let question = generateQuestionForTopic(TOPICS[i], currentUser ? currentUser.level : 1);
-        currentQuestions.push(question);
-        currentAnswers.push(question.answer);
+        // DEFAULT (agar mavzu topilmasa)
+        default:
+            console.log("Default ishga tushdi! Mavzu:", topicName);
+            let defA = randomInt(10, 50);
+            let defB = randomInt(10, 50);
+            question.text = `${defA} + ${defB}`;
+            question.answer = defA + defB;
+            break;
     }
+    
+    return question;
 }
 
 // ============= TEST FUNKSIYALARI =============
@@ -857,7 +895,78 @@ function loadDarkMode() {
         document.body.classList.add('dark-mode');
     }
 }
+// generateTestQuestions funksiyasiga qo'shing
+function generateTestQuestions() {
+    currentQuestions = [];
+    currentAnswers = [];
+    for (let i = 0; i < TOPICS.length; i++) {
+        let question = generateQuestionForTopic(TOPICS[i], currentUser ? currentUser.level : 1);
+        console.log(`${i+1}. ${question.topic}: ${question.text} = ${question.answer}`); // DEBUG
+        currentQuestions.push(question);
+        currentAnswers.push(question.answer);
+    }
+}
+// ============= SAHIFALAR NAVIGATSIYASI =============
+function switchToPage(pageName) {
+    console.log("Sahifa o'zgartirilmoqda:", pageName);
+    
+    // Barcha sahifalarni yashirish
+    const pages = ['homePage', 'testPage', 'statisticsPage', 'lessonsPage', 'aiPage'];
+    pages.forEach(page => {
+        const el = document.getElementById(page);
+        if (el) el.classList.remove('active');
+    });
+    
+    // Tanlangan sahifani ko'rsatish
+    const targetPage = document.getElementById(`${pageName}Page`);
+    if (targetPage) {
+        targetPage.classList.add('active');
+    } else {
+        console.error("Sahifa topilmadi:", pageName + "Page");
+    }
+    
+    // Nav-item larni faollashtirish
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.dataset.page === pageName) {
+            item.classList.add('active');
+        }
+    });
+    
+    // Sahifa sarlavhasini o'zgartirish
+    const titles = {
+        home: "MathAI",
+        test: "Test topshirish",
+        statistics: "Mening statistikam",
+        lessons: "Darslar",
+        ai: "AI yordamchi"
+    };
+    const pageTitle = document.getElementById("pageTitle");
+    if (pageTitle) pageTitle.innerText = titles[pageName] || "MathAI";
+    
+    // Sahifaga xos funksiyalarni ishga tushirish
+    if (pageName === "lessons") {
+        updateLessonsPage();
+    }
+    if (pageName === "statistics" && currentUser) {
+        updateStatisticsPage();
+    }
+}
 
+// Navigatsiya eventlarini ulash
+document.addEventListener('DOMContentLoaded', () => {
+    // ... boshqa kodlar ...
+    
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const page = item.dataset.page;
+            if (page) {
+                switchToPage(page);
+            }
+        });
+    });
+});
 // ============= INIT =============
 document.addEventListener('DOMContentLoaded', () => {
     loadDarkMode();
