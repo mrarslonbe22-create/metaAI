@@ -28,13 +28,10 @@ Thumbs.db
 # Logs
 logs/
 *.log
+server.log
 
 # Local storage (agar mavjud bo'lsa)
 *.local
-
-# Server files
-server.log
-*.pid
 
 # Package files
 package-lock.json
@@ -51,3 +48,6 @@ coverage/
 tmp/
 temp/
 *.tmp
+
+# PM2
+.pm2/
