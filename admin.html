@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - MathAI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 28px;
+        }
+
+        .header h1 span {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stats-cards {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .stat-card .label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 25px;
+            background: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            color: #666;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Table */
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            overflow-x: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: #f8f9fa;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .score-badge {
+            background: #4CAF50;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .score-badge.low {
+            background: #f44336;
+        }
+
+        .score-badge.medium {
+            background: #ff9800;
+        }
+
+        /* Charts */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .chart-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        canvas {
+            max-height: 300px;
+        }
+
+        /* User progress */
+        .user-progress-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .user-progress-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .user-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .user-level {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .topic-progress {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .topic-item {
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .topic-name {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .topic-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .topic-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        /* Buttons */
+        .btn-danger {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close {
+            cursor: pointer;
+            font-size: 24px;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-cards {
+                margin-top: 15px;
+            }
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            th, td {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 <span>MathAI</span> Admin Panel</h1>
+            <div class="stats-cards" id="statsCards">
+                <div class="stat-card">
+                    <div class="number" id="totalStudents">0</div>
+                    <div class="label">O'quvchilar</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" id="avgScore">0</div>
+                    <div class="label">O'rtacha ball</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" id="totalTests">0</div>
+                    <div class="label">Jami testlar</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('results')">📋 Test natijalari</button>
+            <button class="tab-btn" onclick="showTab('students')">👨‍🎓 O'quvchilar progressi</button>
+            <button class="tab-btn" onclick="showTab('statistics')">📈 Statistika</button>
+            <button class="tab-btn" onclick="showTab('settings')">⚙️ Sozlamalar</button>
+        </div>
+
+        <!-- Natijalar tab -->
+        <div id="resultsTab" class="tab-content active">
+            <div class="table-container">
+                <div style="margin-bottom: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                    <input type="text" id="searchInput" placeholder="🔍 Ism bo'yicha qidirish..." style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; flex: 1;">
+                    <button class="btn-primary" onclick="exportToExcel()">📥 Excel ga export</button>
+                    <button class="btn-danger" onclick="clearAllData()">🗑 Barcha ma'lumotlarni tozalash</button>
+                </div>
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>#</th><th>O'quvchi</th><th>Ball</th><th>Zaif mavzular</th><th>Vaqt</th><th>Sana</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- O'quvchilar progressi tab -->
+        <div id="studentsTab" class="tab-content">
+            <div id="studentsList"></div>
+        </div>
+
+        <!-- Statistika tab -->
+        <div id="statisticsTab" class="tab-content">
+            <div class="charts-grid">
+                <div class="chart-card"><h3>📊 Mavzular bo'yicha natijalar</h3><canvas id="topicsChart"></canvas></div>
+                <div class="chart-card"><h3>📈 Oylik testlar dinamikasi</h3><canvas id="trendChart"></canvas></div>
+                <div class="chart-card"><h3>⭐ Ballar taqsimoti</h3><canvas id="scoreChart"></canvas></div>
+            </div>
+        </div>
+
+        <!-- Sozlamalar tab -->
+        <div id="settingsTab" class="tab-content">
+            <div class="table-container">
+                <h3>⚙️ Tizim sozlamalari</h3>
+                <div style="margin: 20px 0;">
+                    <label><input type="checkbox" id="autoAI"> AI avtomatik maslahat bersin</label><br><br>
+                    <label>⏱ Test vaqti (daqiqa): <input type="number" id="testTime" value="1" min="1" max="10" style="width: 80px;"></label><br><br>
+                    <button class="btn-primary" onclick="saveSettings()">💾 Sozlamalarni saqlash</button>
+                </div>
+                <hr>
+                <h4>📚 Mavzu qiyinlik darajalari</h4>
+                <div id="topicLevels"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header"><h3 id="modalTitle"></h3><span class="close" onclick="closeModal()">&times;</span></div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        let resultsData = [];
+        let userProgressData = {};
+
+        // ============= MA'LUMOTLARNI YUKLASH =============
+        function loadData() {
+            resultsData = JSON.parse(localStorage.getItem("results")) || [];
+            userProgressData = JSON.parse(localStorage.getItem("userProgress")) || {};
+            updateStats();
+            renderResultsTable();
+            renderStudentsList();
+            renderCharts();
+        }
+
+        function updateStats() {
+            document.getElementById("totalStudents").innerText = Object.keys(userProgressData).length;
+            document.getElementById("totalTests").innerText = resultsData.length;
+            if (resultsData.length > 0) {
+                let avg = resultsData.reduce((sum, r) => sum + (r.score / r.maxScore * 100), 0) / resultsData.length;
+                document.getElementById("avgScore").innerText = Math.round(avg) + "%";
+            }
+        }
+
+        function renderResultsTable() {
+            let search = document.getElementById("searchInput")?.value.toLowerCase() || "";
+            let filtered = resultsData.filter(r => r.name.toLowerCase().includes(search));
+            let tbody = document.getElementById("resultsTableBody");
+            tbody.innerHTML = "";
+            filtered.reverse().forEach((r, idx) => {
+                let scoreClass = (r.score/r.maxScore) >= 0.7 ? "" : (r.score/r.maxScore) >= 0.4 ? "medium" : "low";
+                let row = tbody.insertRow();
+                row.insertCell(0).innerText = idx+1;
+                row.insertCell(1).innerHTML = `<strong>${r.name}</strong>`;
+                row.insertCell(2).innerHTML = `<span class="score-badge ${scoreClass}">${r.score}/${r.maxScore}</span>`;
+                row.insertCell(3).innerText = r.weakTopics?.join(", ") || "-";
+                row.insertCell(4).innerText = r.timeSpent ? `${r.timeSpent} sek` : "-";
+                row.insertCell(5).innerText = r.date || "-";
+            });
+        }
+
+        function renderStudentsList() {
+            let container = document.getElementById("studentsList");
+            container.innerHTML = "";
+            for (let [name, progress] of Object.entries(userProgressData)) {
+                let card = document.createElement("div");
+                card.className = "user-progress-card";
+                card.onclick = () => showUserDetails(name, progress);
+                let levelColor = progress.level >= 7 ? "#4CAF50" : progress.level >= 4 ? "#ff9800" : "#f44336";
+                let topicsHtml = "";
+                for (let [topic, level] of Object.entries(progress.topicLevels || {})) {
+                    let percent = (level / 10) * 100;
+                    topicsHtml += `<div class="topic-item"><div class="topic-name">${topic}</div><div class="topic-bar"><div class="topic-fill" style="width: ${percent}%; background: ${levelColor};"></div></div><small>${Math.round(level*10)/10}/10</small></div>`;
+                }
+                card.innerHTML = `<div class="user-header"><span class="user-name">${name}</span><span class="user-level" style="background: ${levelColor};">🎯 Daraja ${progress.level || 1}</span></div><div class="topic-progress">${topicsHtml}</div><div style="margin-top: 10px; color: #666; font-size: 12px;">✅ To'g'ri: ${progress.correctAnswers || 0} | ❌ Xato: ${progress.wrongAnswers || 0}</div>`;
+                container.appendChild(card);
+            }
+        }
+
+        function showUserDetails(name, progress) {
+            document.getElementById("modalTitle").innerText = `📘 ${name} haqida batafsil`;
+            let topicsList = "";
+            for (let [topic, level] of Object.entries(progress.topicLevels || {})) {
+                let strength = level >= 7 ? "Kuchli" : level >= 4 ? "O'rta" : "Zaif";
+                topicsList += `<li><strong>${topic}</strong>: ${Math.round(level*10)/10}/10 (${strength})</li>`;
+            }
+            document.getElementById("modalBody").innerHTML = `
+                <p><strong>🎯 Umumiy daraja:</strong> ${progress.level || 1}/10</p>
+                <p><strong>✅ To'g'ri javoblar:</strong> ${progress.correctAnswers || 0}</p>
+                <p><strong>❌ Xato javoblar:</strong> ${progress.wrongAnswers || 0}</p>
+                <p><strong>📅 Oxirgi test:</strong> ${progress.lastTest || "-"}</p>
+                <h4>📚 Mavzular bo'yicha daraja:</h4>
+                <ul>${topicsList}</ul>
+                <button class="btn-primary" onclick="resetStudentProgress('${name}')" style="margin-top: 15px;">🔄 Bu o'quvchini tiklash</button>
+            `;
+            document.getElementById("userModal").style.display = "flex";
+        }
+
+        function resetStudentProgress(name) {
+            if (confirm(`${name} o'quvchining barcha progressi tiklanadi?`)) {
+                delete userProgressData[name];
+                localStorage.setItem("userProgress", JSON.stringify(userProgressData));
+                loadData();
+                closeModal();
+            }
+        }
+
+        function clearAllData() {
+            if (confirm("⚠️ Barcha ma'lumotlar butunlay o'chiriladi! Bu amalni qaytarib bo'lmaydi. Davom etasizmi?")) {
+                localStorage.removeItem("results");
+                localStorage.removeItem("userProgress");
+                localStorage.removeItem("userData");
+                loadData();
+                alert("✅ Barcha ma'lumotlar tozalandi!");
+            }
+        }
+
+        function exportToExcel() {
+            let csv = "№,O'quvchi,Ball,Zaif mavzular,Vaqt,Sana\n";
+            resultsData.forEach((r, i) => {
+                csv += `${i+1},${r.name},${r.score}/${r.maxScore},"${r.weakTopics?.join(", ") || ""}",${r.timeSpent || "-"} sek,${r.date || "-"}\n`;
+            });
+            let blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "mathai_results.csv";
+            link.click();
+        }
+
+        function renderCharts() {
+            let topics = ["qo'shish", "ayirish", "ko'paytirish", "bo'lish", "daraja", "ildiz", "logarifm", "trigonometriya"];
+            let topicScores = topics.map(t => {
+                let total = 0, count = 0;
+                resultsData.forEach(r => { if (r.weakTopics?.includes(t)) total++; count++; });
+                return count ? Math.round((1 - total/count) * 100) : 0;
+            });
+            new Chart(document.getElementById("topicsChart"), { type: "bar", data: { labels: topics, datasets: [{ label: "O'zlashtirish %", data: topicScores, backgroundColor: "#667eea" }] } });
+            
+            let last7Days = [...Array(7)].map((_, i) => { let d = new Date(); d.setDate(d.getDate()-i); return d.toLocaleDateString(); }).reverse();
+            let dailyTests = last7Days.map(day => resultsData.filter(r => r.date?.includes(day)).length);
+            new Chart(document.getElementById("trendChart"), { type: "line", data: { labels: last7Days, datasets: [{ label: "Testlar soni", data: dailyTests, borderColor: "#764ba2", tension: 0.3 }] } });
+            
+            let scoreDist = [0,0,0];
+            resultsData.forEach(r => { let p = (r.score/r.maxScore)*100; if(p>=70) scoreDist[0]++; else if(p>=40) scoreDist[1]++; else scoreDist[2]++; });
+            new Chart(document.getElementById("scoreChart"), { type: "doughnut", data: { labels: ["Yaxshi (70-100%)", "O'rta (40-69%)", "Yomon (0-39%)"], datasets: [{ data: scoreDist, backgroundColor: ["#4CAF50", "#ff9800", "#f44336"] }] } });
+        }
+
+        function saveSettings() {
+            localStorage.setItem("adminSettings", JSON.stringify({ autoAI: document.getElementById("autoAI").checked, testTime: document.getElementById("testTime").value }));
+            alert("✅ Sozlamalar saqlandi!");
+        }
+
+        function loadSettings() {
+            let s = JSON.parse(localStorage.getItem("adminSettings"));
+            if(s) { document.getElementById("autoAI").checked = s.autoAI; document.getElementById("testTime").value = s.testTime; }
+        }
+
+        function showTab(tab) {
+            document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+            document.getElementById(tab + "Tab").classList.add("active");
+            document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+            event.target.classList.add("active");
+            if(tab === "statistics") setTimeout(renderCharts, 100);
+        }
+
+        function closeModal() { document.getElementById("userModal").style.display = "none"; }
+
+        document.getElementById("searchInput")?.addEventListener("input", () => renderResultsTable());
+        window.onclick = e => { if(e.target === document.getElementById("userModal")) closeModal(); };
+        
+        loadData();
+        loadSettings();
+    </script>
+</body>
+</html>
