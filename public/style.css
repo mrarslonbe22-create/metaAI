@@ -28,7 +28,7 @@ body {
     min-height: 100vh;
 }
 
-/* Sidebar Styles */
+/* Sidebar */
 .sidebar {
     width: 280px;
     background: rgba(255,255,255,0.98);
@@ -77,6 +77,7 @@ body {
     color: var(--gray);
     text-decoration: none;
     transition: all 0.3s;
+    cursor: pointer;
 }
 
 .nav-item i {
@@ -156,7 +157,6 @@ body {
     cursor: pointer;
 }
 
-/* Pages */
 .page {
     display: none;
     animation: fadeIn 0.3s;
@@ -171,30 +171,12 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hero Section */
-.hero-section {
+/* Card styles */
+.card {
     background: white;
-    border-radius: 24px;
-    padding: 50px;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.hero-section h1 {
-    font-size: 42px;
-    margin-bottom: 20px;
-}
-
-.gradient-text {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.hero-section p {
-    color: var(--gray);
-    max-width: 600px;
-    margin: 0 auto 30px;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 /* Buttons */
@@ -221,18 +203,13 @@ body {
     box-shadow: 0 10px 20px rgba(102,126,234,0.3);
 }
 
-.btn-large {
-    padding: 16px 40px;
-    font-size: 18px;
-}
-
 .btn-outline {
     background: transparent;
     border: 2px solid var(--primary);
     color: var(--primary);
 }
 
-/* Stats Grid */
+/* Stats grid */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -255,11 +232,6 @@ body {
     color: var(--primary);
 }
 
-.stat-info {
-    display: flex;
-    flex-direction: column;
-}
-
 .stat-value {
     font-size: 28px;
     font-weight: bold;
@@ -271,40 +243,7 @@ body {
     color: var(--gray);
 }
 
-/* Topics Grid */
-.topics-grid, .lessons-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.topic-card {
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s;
-    border: 2px solid transparent;
-}
-
-.topic-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.topic-card.completed {
-    border-color: var(--success);
-}
-
-.topic-card i {
-    font-size: 30px;
-    color: var(--primary);
-    margin-bottom: 10px;
-}
-
-/* Test Styles */
+/* Test styles */
 .test-header {
     background: white;
     padding: 20px;
@@ -326,11 +265,6 @@ body {
     font-size: 24px;
 }
 
-.progress-info {
-    flex: 1;
-    max-width: 300px;
-}
-
 .progress-bar {
     background: var(--border);
     height: 8px;
@@ -350,12 +284,12 @@ body {
     border-radius: 20px;
     padding: 30px;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .question-text {
     font-size: 24px;
     margin-bottom: 20px;
-    text-align: center;
 }
 
 .question-input {
@@ -375,6 +309,28 @@ body {
     padding: 20px;
     border-radius: 12px;
     margin-top: 20px;
+}
+
+/* Toast notifications */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    color: white;
+    font-weight: 500;
+    z-index: 1000;
+    animation: slideIn 0.3s;
+}
+
+.toast-success { background: var(--success); }
+.toast-error { background: var(--danger); }
+.toast-warning { background: var(--warning); }
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
 }
 
 /* AI Chat */
@@ -466,16 +422,12 @@ body {
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .hero-section h1 {
-        font-size: 28px;
-    }
-    
     .question-text {
         font-size: 18px;
     }
 }
 
-/* Result Card */
+/* Result card */
 .result-card {
     background: white;
     border-radius: 24px;
@@ -493,7 +445,34 @@ body {
     color: var(--primary);
 }
 
-.score-total {
+.weak-topics-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.weak-topic {
+    padding: 5px 15px;
+    background: #fee2e2;
+    color: var(--danger);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.ai-advice-card {
+    background: linear-gradient(135deg, #667eea10, #764ba210);
+    padding: 20px;
+    border-radius: 16px;
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.ai-advice-card i {
     font-size: 32px;
-    color: var(--gray);
+    color: var(--primary);
 }
