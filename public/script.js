@@ -895,3 +895,24 @@ document.addEventListener('DOMContentLoaded', () => {
     
     console.log("✅ MathAI tayyor!");
 });
+// ============= GLOBAL FUNKSIYALARNI REGISTRATSIYA QILISH (KNOPKALAR UCHUN) =============
+window.registerUser = registerUser;
+window.initTest = initTest;
+window.submitAnswer = submitAnswer;
+window.skipQuestion = skipQuestion;
+window.restartTest = restartTest;
+window.logout = logout;
+window.switchToPage = switchToPage;
+window.showTopicLesson = showTopicLesson;
+window.closeLessonModal = closeLessonModal;
+window.sendChatMessage = sendChatMessage;
+window.toggleDarkMode = toggleDarkMode;
+window.startTopicPractice = startTopicPractice;
+window.filterLessons = filterLessons;
+window.updateLessonsPage = updateLessonsPage;
+window.updateTopicsGrid = updateTopicsGrid;
+window.updateStatisticsPage = updateStatisticsPage;
+window.finishTest = finishTest;
+window.showToast = showToast;
+
+console.log("✅ Barcha funksiyalar global qilindi!");
