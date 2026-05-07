@@ -732,3 +732,29 @@ document.addEventListener('DOMContentLoaded', () => {
     
     console.log("✅ MathAI (AI darajali test tizimi) tayyor!");
 });
+// ============= GLOBAL FUNKSIYALARNI MAJBURAN REGISTRATSIYA QILISH =============
+(function() {
+    console.log("🔧 Global funksiyalar registratsiyasi boshlanmoqda...");
+    
+    window.registerUser = registerUser;
+    window.initTest = initTest;
+    window.submitAnswer = submitAnswer;
+    window.skipQuestion = skipQuestion;
+    window.restartTest = restartTest;
+    window.logout = logout;
+    window.switchToPage = switchToPage;
+    window.openAILesson = openAILesson;
+    window.closeLessonModal = closeLessonModal;
+    window.sendChatMessage = sendChatMessage;
+    window.toggleDarkMode = toggleDarkMode;
+    window.startPracticeForTopic = startPracticeForTopic;
+    window.updateLessonsPage = updateLessonsPage;
+    window.updateTopicsGrid = updateTopicsGrid;
+    window.updateStatisticsPage = updateStatisticsPage;
+    window.closeLessonModalAndContinue = closeLessonModalAndContinue;
+    window.showToast = showToast;
+    
+    console.log("✅ Barcha funksiyalar global qilindi!");
+    console.log("✅ registerUser:", typeof window.registerUser);
+    console.log("✅ initTest:", typeof window.initTest);
+})();
