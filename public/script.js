@@ -1,6 +1,7 @@
-// ============= VERCEL TUZATISH =============
+// ============= VERCEL UCHUN GLOBAL FUNKSIYALAR =============
 (function() {
-    // Funksiyalarni global qilish
+    console.log("🔧 MathAI Vercel versiyasi ishga tushmoqda...");
+    
     window.registerUser = function() {
         console.log("registerUser chaqirildi");
         const firstName = document.getElementById("regFirstName")?.value.trim();
@@ -10,8 +11,6 @@
             return;
         }
         alert("Xush kelibsiz, " + firstName + "!");
-        
-        // Registratsiyadan keyin homePage ni ko'rsatish
         document.getElementById("registrationPage").style.display = "none";
         document.getElementById("homePage").classList.add("active");
     };
@@ -79,8 +78,13 @@
         if (modal) modal.style.display = "none";
     };
     
+    window.closeLessonModalAndContinue = function() {
+        window.closeLessonModal();
+    };
+    
     console.log("✅ Vercel tuzatildi!");
 })();
+
 // ============= API SOZLAMALARI =============
 const API_BASE = window.location.origin;
 
@@ -91,10 +95,10 @@ const TOPICS = [
     "Kvadrat tenglama", "Kvadrat funksiya", "Logarifm (asosiy)",
     "Logarifmik tenglama", "Trigonometriya", "Trigonometrik tenglama",
     "Arifmetik progressiya", "Geometrik progressiya", "Limit",
-    "Hosila", "Integral", "Aniq integral"
+    "Hosila", "Integral (asosiy)", "Aniq integral"
 ];
 
-// ============= MAVZU TUSHUNTIRISHLARI (AI YORDAMIDA) =============
+// ============= MAVZU TUSHUNTIRISHLARI =============
 const TOPICS_EXPLANATION = {
     "Butun sonlar": "Butun sonlar - manfiy, nol va musbat sonlar. Qo'shish (+), ayirish (-), ko'paytirish (×), bo'lish (÷) amallari bajariladi.",
     "Kasrlar": "Kasr - a/b ko'rinishidagi son. a - surat, b - maxraj. Kasrlarni qo'shish uchun umumiy maxrajga keltiriladi.",
@@ -103,18 +107,18 @@ const TOPICS_EXPLANATION = {
     "Ildiz": "√a = b, agar b² = a. (√a)² = a, √(a×b) = √a × √b",
     "Proportsiya": "a:b = c:d → ad = bc. a/b = c/d → x = (b×c)/a",
     "Bir noma'lumli tenglama": "ax + b = c → x = (c-b)/a. Noma'lumni bir tomonga o'tkazish kerak.",
-    "Ikki noma'lumli tenglama": "x+y=S, x-y=D → x=(S+D)/2, y=(S-D)/2. Qo'shish yoki almashtirish usuli.",
-    "Kvadrat tenglama": "ax²+bx+c=0 → D=b²-4ac → x=[-b±√D]/2a. D>0→2 ta ildiz, D=0→1 ta ildiz, D<0→ildiz yo'q.",
-    "Kvadrat funksiya": "y=ax²+bx+c. Tepa nuqta: x=-b/(2a). a>0→yuqoriga, a<0→pastga ochiladi.",
-    "Logarifm (asosiy)": "log_a(b)=c → a^c=b. log(ab)=loga+logb, log(a/b)=loga-logb, log(aⁿ)=n·loga",
+    "Ikki noma'lumli tenglama": "x+y=S, x-y=D → x=(S+D)/2, y=(S-D)/2.",
+    "Kvadrat tenglama": "ax²+bx+c=0 → D=b²-4ac → x=[-b±√D]/2a.",
+    "Kvadrat funksiya": "y=ax²+bx+c. Tepa nuqta: x=-b/(2a).",
+    "Logarifm (asosiy)": "log_a(b)=c → a^c=b. log(ab)=loga+logb, log(a/b)=loga-logb.",
     "Logarifmik tenglama": "log_a(x)=b → x=a^b. Aniqlanish sohasi: x>0, a>0, a≠1",
-    "Trigonometriya": "sin²α+cos²α=1, sin(30°)=0.5, cos(60°)=0.5, sin(45°)=0.707, cos(45°)=0.707",
+    "Trigonometriya": "sin²α+cos²α=1, sin(30°)=0.5, cos(60°)=0.5, sin(45°)=0.707.",
     "Trigonometrik tenglama": "sin(x)=a → x=arcsin(a)+360°·k, cos(x)=a → x=arccos(a)+360°·k",
-    "Arifmetik progressiya": "a_n = a₁ + (n-1)d, S_n = n(a₁+a_n)/2. d - ayirma",
-    "Geometrik progressiya": "a_n = a₁ × q^(n-1), S_n = a₁(qⁿ-1)/(q-1). q - maxraj",
-    "Limit": "lim(x→a) f(x)=L. lim(x→0) sin(x)/x=1, lim(x→2)(x²-4)/(x-2)=4",
-    "Hosila": "f'(x)=lim(h→0)[f(x+h)-f(x)]/h. (xⁿ)'=n·xⁿ⁻¹, (sin x)'=cos x, (cos x)'=-sin x",
-    "Integral": "∫ xⁿ dx = xⁿ⁺¹/(n+1)+C, ∫ sin(x)dx = -cos(x)+C, ∫ cos(x)dx = sin(x)+C",
+    "Arifmetik progressiya": "a_n = a₁ + (n-1)d, S_n = n(a₁+a_n)/2.",
+    "Geometrik progressiya": "a_n = a₁ × q^(n-1), S_n = a₁(qⁿ-1)/(q-1).",
+    "Limit": "lim(x→a) f(x)=L. lim(x→0) sin(x)/x=1.",
+    "Hosila": "f'(x)=lim(h→0)[f(x+h)-f(x)]/h. (xⁿ)'=n·xⁿ⁻¹.",
+    "Integral (asosiy)": "∫ xⁿ dx = xⁿ⁺¹/(n+1)+C, ∫ sin(x)dx = -cos(x)+C.",
     "Aniq integral": "∫_a^b f(x)dx = F(b)-F(a). Nyuton-Leybnis formulasi"
 };
 
@@ -141,13 +145,8 @@ async function generateAIQuestion(topicName, level) {
     const prompt = `Siz matematika o'qituvchisiz. "${topicName}" mavzusiga oid matematik savol yarating.
 
 QIYINLIK DARAJASI: ${level}/10 (${levelDesc})
-TALABLAR:
-1. Savol faqat ${topicName} mavzusiga oid bo'lsin
-2. ${level}/10 darajasiga mos qiyinlikda bo'lsin
-3. Javob aniq raqam bo'lsin (butun yoki o'nlik)
-4. O'zbek tilida yozilsin
 
-QAYTARISH FORMATI (faqat shu formatda):
+QAYTARISH FORMATI:
 SAVOL: [savol matni]
 JAVOB: [raqam]`;
     
@@ -182,20 +181,11 @@ JAVOB: [raqam]`;
 
 // ============= AI TUSHUNTIRISH =============
 async function getAIExplanation(topicName, userAnswer, correctAnswer, level) {
-    const prompt = `Siz matematika o'qituvchisisis. O'quvchi "${topicName}" mavzusida xato qildi.
-
-O'quvchi darajasi: ${level}/10
+    const prompt = `O'quvchi "${topicName}" mavzusida xato qildi.
 O'quvchi javobi: ${userAnswer}
 To'g'ri javob: ${correctAnswer}
 
-Quyidagilarni o'zbek tilida yozing:
-
-1. 📐 FORMULA: (bu mavzu uchun asosiy formulani yozing)
-2. 📝 MISOL: (qadam-baqadam yechim bilan)
-3. ✏️ AMALIY TOPSHIRIQ: (o'quvchi mustaqil yechishi uchun misol)
-4. 💡 MASLAHAT: (qisqa tavsiya)
-
-Javobingizni tushunarli va batafsil yozing.`;
+Formulalar va misollar bilan tushuntiring.`;
     
     try {
         const response = await fetch(`${API_BASE}/api/ask`, {
@@ -204,26 +194,15 @@ Javobingizni tushunarli va batafsil yozing.`;
             body: JSON.stringify({ question: prompt })
         });
         const data = await response.json();
-        return data.answer || TOPICS_EXPLANATION[topicName] || `${topicName} mavzusini qayta o'rganing. To'g'ri javob: ${correctAnswer}`;
+        return data.answer || TOPICS_EXPLANATION[topicName] || `To'g'ri javob: ${correctAnswer}`;
     } catch (error) {
-        return TOPICS_EXPLANATION[topicName] || `${topicName} mavzusini qayta o'rganing. To'g'ri javob: ${correctAnswer}`;
+        return TOPICS_EXPLANATION[topicName] || `To'g'ri javob: ${correctAnswer}`;
     }
 }
 
 // ============= AI DARS O'QISH =============
 async function getAILesson(topicName, level) {
-    const prompt = `Siz matematika o'qituvchisiz. "${topicName}" mavzusini o'rgating.
-
-O'quvchi darajasi: ${level}/10
-
-Quyidagilarni o'zbek tilida yozing:
-1. 📐 MAVZU NOMI VA ASOSIY FORMULA:
-2. 📏 QOIDALAR (3-4 ta):
-3. 📝 MISOL (batafsil yechim bilan):
-4. ✏️ MUSTAQIL TOPSHIRIQ:
-5. 💡 XULOSA:
-
-Javobingizni tushunarli va misollar bilan to'ldiring.`;
+    const prompt = `"${topicName}" mavzusini o'rgating. Formulalar, qoidalar va misollar bilan tushuntiring.`;
     
     try {
         const response = await fetch(`${API_BASE}/api/ask`, {
@@ -232,9 +211,9 @@ Javobingizni tushunarli va misollar bilan to'ldiring.`;
             body: JSON.stringify({ question: prompt })
         });
         const data = await response.json();
-        return data.answer || TOPICS_EXPLANATION[topicName] || `${topicName} mavzusini qayta o'rganing.`;
+        return data.answer || TOPICS_EXPLANATION[topicName] || `${topicName} mavzusini o'rganing.`;
     } catch (error) {
-        return TOPICS_EXPLANATION[topicName] || `${topicName} mavzusini qayta o'rganing.`;
+        return TOPICS_EXPLANATION[topicName] || `${topicName} mavzusini o'rganing.`;
     }
 }
 
@@ -293,16 +272,12 @@ class UserProfile {
     updateLevelFromTest(percent) {
         let oldLevel = this.level;
         let increase = 0;
-        
         if (percent >= 90) increase = 1.0;
         else if (percent >= 75) increase = 0.75;
         else if (percent >= 65) increase = 0.5;
         else if (percent >= 50) increase = 0.25;
-        else increase = 0;
-        
         let newLevel = Math.min(10, oldLevel + increase);
         this.level = newLevel;
-        
         if (newLevel > oldLevel) {
             this.showLevelUpToast(oldLevel, newLevel);
         }
@@ -312,7 +287,7 @@ class UserProfile {
     showLevelUpToast(oldLevel, newLevel) {
         const toast = document.createElement('div');
         toast.style.cssText = `position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:linear-gradient(135deg,#10b981,#4f46e5);color:white;padding:20px 40px;border-radius:20px;font-size:24px;font-weight:bold;z-index:10000;text-align:center;`;
-        toast.innerHTML = `🎉 <strong>DARAJA OSHDI!</strong> 🎉<br>${oldLevel.toFixed(1)} → ${newLevel.toFixed(1)}`;
+        toast.innerHTML = `🎉 DARAJA OSHDI! ${oldLevel.toFixed(1)} → ${newLevel.toFixed(1)}`;
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 3000);
     }
@@ -326,7 +301,6 @@ class UserProfile {
         if (currentLevelSpan) currentLevelSpan.innerText = this.level.toFixed(1);
         const totalTestsSpan = document.getElementById("totalTestsCount");
         if (totalTestsSpan) totalTestsSpan.innerText = this.totalTests;
-        
         const avgScore = this.testHistory.length > 0 
             ? Math.round(this.testHistory.reduce((sum, t) => sum + t.percent, 0) / this.testHistory.length) 
             : 0;
@@ -348,7 +322,6 @@ class UserProfile {
             newLevel: this.level,
             timeSpent: timeSpent
         });
-        
         const today = new Date().toDateString();
         if (this.lastTestDate !== today) {
             const yesterday = new Date();
@@ -365,7 +338,6 @@ class UserProfile {
 // ============= TEST SAVOLLARINI YARATISH =============
 async function generateTestQuestions() {
     if (!currentUser) return;
-    
     currentQuestions = [];
     currentAnswers = [];
     let level = Math.min(10, Math.max(1, Math.floor(currentUser.level)));
@@ -382,12 +354,10 @@ async function generateTestQuestions() {
             level: level
         });
         currentAnswers.push(question.answer);
-        
-        // API ga haddan tashqari ko'p so'rov yubormaslik uchun
         await new Promise(r => setTimeout(r, 300));
     }
     
-    showToast(`✅ ${TOPICS.length} ta savol tayyor! Testni boshlang.`, "success");
+    showToast(`✅ ${TOPICS.length} ta savol tayyor!`, "success");
 }
 
 // ============= REGISTRATSIYA =============
@@ -404,7 +374,7 @@ function registerUser() {
     document.getElementById("homePage").classList.add("active");
     updateTopicsGrid();
     currentUser.updateUI();
-    showToast(`👋 Xush kelibsiz, ${firstName}! Sizning darajangiz: ${currentUser.level}`, "success");
+    showToast(`👋 Xush kelibsiz, ${firstName}! Darajangiz: ${currentUser.level}`, "success");
 }
 
 function logout() {
@@ -419,19 +389,16 @@ async function initTest() {
         switchToPage('home');
         return;
     }
-    
     await generateTestQuestions();
     currentQuestionIndex = 0;
     userScore = 0;
     userAnswers = [];
     timeLeft = 900;
-    
     document.getElementById("testStartSection").style.display = "none";
     document.getElementById("testActiveSection").style.display = "block";
     document.getElementById("testResultSection").style.display = "none";
     document.getElementById("totalQuestions").innerText = TOPICS.length;
     document.getElementById("currentLevelBadge").innerText = currentUser.level.toFixed(1);
-    
     startTimer();
     showCurrentQuestion();
 }
@@ -493,7 +460,7 @@ async function submitAnswer() {
         if (currentQuestionIndex >= TOPICS.length) finishTest();
         else showCurrentQuestion();
     } else {
-        showToast("❌ Xato javob! AI tushuntirish tayyorlamoqda...", "info");
+        showToast("❌ Xato javob! AI tushuntiryapti...", "info");
         const explanation = await getAIExplanation(currentTopic, userAnswer, correctAnswer, questionLevel);
         showAIExplanation(currentTopic, explanation, correctAnswer);
     }
@@ -508,7 +475,7 @@ function showAIExplanation(topicName, explanation, correctAnswer) {
                 <strong>❌ Xato javob!</strong><br>
                 <strong>✅ To'g'ri javob:</strong> ${correctAnswer}
             </div>
-            <div class="formula-box" style="background:#f0fdf4; padding:15px; border-radius:12px;">
+            <div class="formula-box">
                 <strong>🤖 AI TUSHUNTIRISHI:</strong><br>
                 <div style="margin-top:10px; line-height:1.6;">${explanation.replace(/\n/g, '<br>')}</div>
             </div>
@@ -518,7 +485,7 @@ function showAIExplanation(topicName, explanation, correctAnswer) {
             </div>
         `;
     }
-    document.getElementById("modalTitle").innerHTML = `<i class="fas fa-graduation-cap"></i> ${topicName} - AI Tushuntirish`;
+    document.getElementById("modalTitle").innerHTML = `<i class="fas fa-graduation-cap"></i> ${topicName}`;
     const modal = document.getElementById("lessonModal");
     if (modal) modal.style.display = "flex";
 }
@@ -526,16 +493,14 @@ function showAIExplanation(topicName, explanation, correctAnswer) {
 function closeLessonModalAndContinue() {
     closeLessonModal();
     currentQuestionIndex++;
-    if (currentQuestionIndex >= TOPICS.length) {
-        finishTest();
-    } else {
-        showCurrentQuestion();
-    }
+    if (currentQuestionIndex >= TOPICS.length) finishTest();
+    else showCurrentQuestion();
 }
 
 function skipQuestion() {
     if (currentQuestionIndex >= TOPICS.length) return;
-    userAnswers.push({ isCorrect: false, topic: currentQuestions[currentQuestionIndex].topic, skipped: true });
+    const currentTopic = currentQuestions[currentQuestionIndex].topic;
+    userAnswers.push({ isCorrect: false, topic: currentTopic, skipped: true });
     showToast("⏭ Savol o'tkazib yuborildi", "warning");
     currentQuestionIndex++;
     if (currentQuestionIndex >= TOPICS.length) finishTest();
@@ -572,12 +537,12 @@ function finishTest() {
     
     const minutes = Math.floor(timeSpent / 60);
     const seconds = timeSpent % 60;
-    document.getElementById("resultDetails").innerHTML = `<p>⏱ Sarflangan vaqt: ${minutes > 0 ? `${minutes} daqiqa ${seconds} soniya` : `${seconds} soniya`}</p><p>🎯 Yangi darajangiz: <strong>${currentUser.level.toFixed(1)}/10</strong></p>`;
+    document.getElementById("resultDetails").innerHTML = `<p>⏱ Sarflangan vaqt: ${minutes > 0 ? `${minutes} daqiqa ${seconds} soniya` : ${seconds} soniya}</p><p>🎯 Yangi darajangiz: <strong>${currentUser.level.toFixed(1)}/10</strong></p>`;
     
     const weakTopics = userAnswers.filter(a => !a.isCorrect).map(a => a.topic);
     let weakHtml = "";
     if (weakTopics.length > 0) {
-        weakHtml = `<h4>📖 O'rganishingiz kerak bo'lgan mavzular:</h4><div class="weak-topics-list">${weakTopics.slice(0, 5).map(t => `<span class="weak-topic" onclick="openAILesson('${t}')">${t}</span>`).join('')}</div>`;
+        weakHtml = `<h4>📖 O'rganishingiz kerak:</h4><div class="weak-topics-list">${weakTopics.slice(0, 5).map(t => `<span class="weak-topic" onclick="openAILesson('${t}')">${t}</span>`).join('')}</div>`;
     } else {
         weakHtml = `<p>🎉 A'lo! Barcha savollarga to'g'ri javob berdingiz!</p>`;
     }
@@ -591,7 +556,7 @@ function restartTest() {
     document.getElementById("testResultSection").style.display = "none";
 }
 
-// ============= AI DARS O'QISH (O'RGANISH TUGMASI) =============
+// ============= AI DARS =============
 async function openAILesson(topicName) {
     showToast(`🤖 "${topicName}" mavzusini tayyorlamoqda...`, "info");
     const level = currentUser ? currentUser.level : 1;
@@ -601,13 +566,12 @@ async function openAILesson(topicName) {
     const modalBody = document.getElementById("modalBody");
     if (modalBody) {
         modalBody.innerHTML = `
-            <div style="background:linear-gradient(135deg,#4f46e5,#7c3aed); color:white; padding:15px; border-radius:12px; margin-bottom:20px; text-align:center;">
-                <i class="fas fa-chalkboard-user" style="font-size:40px;"></i>
+            <div style="background:linear-gradient(135deg,#4f46e5,#7c3aed); color:white; padding:15px; border-radius:12px; margin-bottom:20px;">
                 <h2>${topicName}</h2>
             </div>
-            <div class="formula-box" style="background:#f0fdf4; padding:15px; border-radius:12px;">
+            <div class="formula-box">
                 <strong>🤖 AI DARS:</strong><br>
-                <div style="margin-top:10px; line-height:1.6;">${lesson.replace(/\n/g, '<br>')}</div>
+                <div style="margin-top:10px;">${lesson.replace(/\n/g, '<br>')}</div>
             </div>
             <div style="display:flex; gap:10px; margin-top:20px;">
                 <button class="btn btn-primary" onclick="closeLessonModal()" style="flex:1;">Tushunildi</button>
@@ -615,8 +579,7 @@ async function openAILesson(topicName) {
             </div>
         `;
     }
-    document.getElementById("modalTitle").innerHTML = `<i class="fas fa-book-open"></i> ${topicName} - AI Dars`;
-    const modal = document.getElementById("lessonModal");
+    document.getElementById("modalTitle").innerHTML = `<i class="fas fa-book-open"></i> ${topicName}`;
     if (modal) modal.style.display = "flex";
 }
 
@@ -630,16 +593,12 @@ async function startPracticeForTopic(topicName) {
         const userNum = parseFloat(userAnswer);
         const isCorrect = !isNaN(userNum) && Math.abs(userNum - question.answer) < 0.01;
         if (isCorrect) {
-            showToast(`✅ To'g'ri javob! "${topicName}" mavzusini yaxshi tushungansiz!`, "success");
+            showToast(`✅ To'g'ri javob!`, "success");
         } else {
-            showToast(`❌ Xato! To'g'ri javob: ${question.answer}. Qayta o'rganing!`, "error");
+            showToast(`❌ Xato! To'g'ri javob: ${question.answer}`, "error");
             openAILesson(topicName);
         }
     }
-}
-
-function showTopicLesson(topicName) {
-    openAILesson(topicName);
 }
 
 function closeLessonModal() {
@@ -701,7 +660,7 @@ function updateStatisticsPage() {
         const data = testScores.map(t => t.percent);
         new Chart(chart, {
             type: 'line',
-            data: { labels: labels, datasets: [{ label: 'Natijalar (%)', data: data, borderColor: '#4f46e5', backgroundColor: 'rgba(79,70,229,0.1)', fill: true, tension: 0.3 }] },
+            data: { labels: labels, datasets: [{ label: 'Natijalar (%)', data: data, borderColor: '#4f46e5', backgroundColor: 'rgba(79,70,229,0.1)', fill: true }] },
             options: { responsive: true, scales: { y: { min: 0, max: 100 } } }
         });
     }
@@ -709,9 +668,9 @@ function updateStatisticsPage() {
     if (recent) {
         if (currentUser.testHistory.length > 0) {
             recent.innerHTML = currentUser.testHistory.slice(0, 10).map((t, i) => `
-                <div style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid #e2e8f0;">
-                    <div><strong>#${i + 1}</strong><small style="margin-left:10px;">${new Date(t.date).toLocaleDateString('uz-UZ')}</small></div>
-                    <div><span style="background:${t.percent >= 75 ? '#10b981' : (t.percent >= 50 ? '#f59e0b' : '#ef4444')}; padding:4px 12px; border-radius:20px; color:white;">${t.score}/${t.total} (${t.percent}%)</span>${t.levelIncrease > 0 ? `<span style="margin-left:10px; color:#10b981;">+${t.levelIncrease}</span>` : ''}</div>
+                <div style="display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid #e2e8f0;">
+                    <span>${new Date(t.date).toLocaleDateString('uz-UZ')}</span>
+                    <span style="background:${t.percent>=75?'#10b981':(t.percent>=50?'#f59e0b':'#ef4444')}; padding:4px 12px; border-radius:20px;">${t.score}/${t.total} (${t.percent}%)</span>
                 </div>
             `).join('');
         } else {
@@ -728,7 +687,7 @@ function updateTopicsGrid() {
         <div class="topic-card" onclick="openAILesson('${topic}')">
             <i class="fas fa-chalkboard-user"></i>
             <h4>${topic}</h4>
-            <button class="btn btn-primary" style="margin-top:12px; width:100%;" onclick="event.stopPropagation(); openAILesson('${topic}')">📚 AI dars</button>
+            <button class="btn btn-primary" onclick="event.stopPropagation(); openAILesson('${topic}')">📚 AI dars</button>
         </div>
     `).join('');
 }
@@ -740,24 +699,20 @@ function updateLessonsPage() {
         <div class="topic-card" onclick="openAILesson('${topic}')">
             <i class="fas fa-book-open"></i>
             <h4>${topic}</h4>
-            <button class="btn btn-primary" style="margin-top:12px; width:100%;" onclick="event.stopPropagation(); openAILesson('${topic}')">📚 AI dars olish</button>
+            <button class="btn btn-primary" onclick="event.stopPropagation(); openAILesson('${topic}')">📚 AI dars</button>
         </div>
     `).join('');
 }
 
 // ============= SAHIFALAR =============
 function switchToPage(pageName) {
-    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    const pages = ['homePage', 'testPage', 'statisticsPage', 'lessonsPage', 'aiPage'];
+    pages.forEach(page => {
+        const el = document.getElementById(page);
+        if (el) el.classList.remove('active');
+    });
     const target = document.getElementById(`${pageName}Page`);
-    if (target) target.classList.add("active");
-    document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
-    const activeNav = document.querySelector(`.nav-item[data-page="${pageName}"]`);
-    if (activeNav) activeNav.classList.add("active");
-    const titles = { home: "MathAI", test: "Test", statistics: "Statistika", lessons: "Darslar", ai: "AI yordamchi" };
-    const title = document.getElementById("pageTitle");
-    if (title) title.innerText = titles[pageName] || "MathAI";
-    if (pageName === "lessons") updateLessonsPage();
-    if (pageName === "statistics" && currentUser) updateStatisticsPage();
+    if (target) target.classList.add('active');
 }
 
 function showToast(message, type) {
@@ -805,39 +760,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const themeToggle = document.getElementById("themeToggle");
     if (themeToggle) themeToggle.addEventListener("click", toggleDarkMode);
+    
     const menuToggle = document.getElementById("menuToggle");
     const sidebar = document.getElementById("sidebar");
     if (menuToggle && sidebar) menuToggle.addEventListener("click", () => sidebar.classList.toggle("open"));
+    
     window.onclick = (e) => {
         const modal = document.getElementById("lessonModal");
         if (e.target === modal) closeLessonModal();
     };
     
-    console.log("✅ MathAI (AI darajali test tizimi) tayyor!");
+    console.log("✅ MathAI Vercel versiyasi tayyor!");
 });
-// ============= GLOBAL FUNKSIYALARNI MAJBURAN REGISTRATSIYA QILISH =============
-(function() {
-    console.log("🔧 Global funksiyalar registratsiyasi boshlanmoqda...");
-    
-    window.registerUser = registerUser;
-    window.initTest = initTest;
-    window.submitAnswer = submitAnswer;
-    window.skipQuestion = skipQuestion;
-    window.restartTest = restartTest;
-    window.logout = logout;
-    window.switchToPage = switchToPage;
-    window.openAILesson = openAILesson;
-    window.closeLessonModal = closeLessonModal;
-    window.sendChatMessage = sendChatMessage;
-    window.toggleDarkMode = toggleDarkMode;
-    window.startPracticeForTopic = startPracticeForTopic;
-    window.updateLessonsPage = updateLessonsPage;
-    window.updateTopicsGrid = updateTopicsGrid;
-    window.updateStatisticsPage = updateStatisticsPage;
-    window.closeLessonModalAndContinue = closeLessonModalAndContinue;
-    window.showToast = showToast;
-    
-    console.log("✅ Barcha funksiyalar global qilindi!");
-    console.log("✅ registerUser:", typeof window.registerUser);
-    console.log("✅ initTest:", typeof window.initTest);
-})();
