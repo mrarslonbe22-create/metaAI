@@ -1032,29 +1032,84 @@ function filterLessons() {
 
 // ============= SAHIFALAR =============
 function switchToPage(pageName) {
-    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    console.log("Sahifa o'zgartirilmoqda:", pageName);
+    
+    // Barcha sahifalarni yashirish
+    const pages = ['homePage', 'testPage', 'statisticsPage', 'lessonsPage', 'aiPage'];
+    pages.forEach(page => {
+        const el = document.getElementById(page);
+        if (el) el.classList.remove('active');
+    });
+    
+    // Tanlangan sahifani ko'rsatish
     const target = document.getElementById(`${pageName}Page`);
-    if (target) target.classList.add("active");
-    document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
-    const activeNav = document.querySelector(`.nav-item[data-page="${pageName}"]`);
-    if (activeNav) activeNav.classList.add("active");
-    const titles = { home: "MathAI", test: "Test", statistics: "Statistika", lessons: "Darslar", ai: "AI yordamchi" };
-    const title = document.getElementById("pageTitle");
-    if (title) title.innerText = titles[pageName] || "MathAI";
-    if (pageName === "lessons") { updateLessonsPage(); if(document.getElementById("lessonSearch")) document.getElementById("lessonSearch").addEventListener("input", filterLessons); }
-    if (pageName === "statistics" && currentUser) updateStatisticsPage();
-    if (pageName === "home") updateTopicsGrid();
+    if (target) {
+        target.classList.add('active');
+    } else {
+        console.error("Sahifa topilmadi:", pageName + "Page");
+        return;
+    }
+    
+    // Nav-item larni faollashtirish
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('data-page') === pageName) {
+            item.classList.add('active');
+        }
+    });
+    
+    // Sarlavhani yangilash
+function switchToPage(pageName) {
+    console.log("Sahifa o'zgartirilmoqda:", pageName);
+    
+    // Barcha sahifalarni yashirish
+    const pages = ['homePage', 'testPage', 'statisticsPage', 'lessonsPage', 'aiPage'];
+    pages.forEach(page => {
+        const el = document.getElementById(page);
+        if (el) el.classList.remove('active');
+    });
+    
+    // Tanlangan sahifani ko'rsatish
+    const target = document.getElementById(`${pageName}Page`);
+    if (target) {
+        target.classList.add('active');
+    } else {
+        console.error("Sahifa topilmadi:", pageName + "Page");
+        return;
+    }
+    
+    // Nav-item larni faollashtirish
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('data-page') === pageName) {
+            item.classList.add('active');
+        }
+    });
+    
+    // Sarlavhani yangilash
+    const titles = {
+        home: "MathAI",
+        test: "Test topshirish",
+        statistics: "Mening statistikam",
+        lessons: "Darslar",
+        ai: "AI yordamchi"
+    };
+    const pageTitle = document.getElementById("pageTitle");
+    if (pageTitle) pageTitle.innerText = titles[pageName] || "MathAI";
+    
+    // Lessons sahifasida qidiruv funksiyasini yoqish
+    if (pageName === "lessons") {
+        const searchInput = document.getElementById("lessonSearch");
+        if (searchInput && typeof filterLessons === 'function') {
+            searchInput.addEventListener('input', filterLessons);
+        }
+        if (typeof updateLessonsPage === 'function') updateLessonsPage();
+    }
+    
+    if (pageName === "statistics" && currentUser && typeof updateStatisticsPage === 'function') {
+        updateStatisticsPage();
+    }
 }
-
-function showToast(message, type) {
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.style.background = type === 'success' ? '#10b981' : (type === 'warning' ? '#f59e0b' : '#ef4444');
-    toast.innerHTML = message;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
-}
-
 // ============= DARK MODE =============
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
