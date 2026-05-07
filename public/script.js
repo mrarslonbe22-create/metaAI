@@ -1,6 +1,7 @@
 // ============= API SOZLAMALARI =============
-const API_BASE = window.location.origin;
+const API_BASE = window.location.origin; // ✅ Faqat backend manzili
 
+// API key ni BU YERGA YOZMANG!
 // ============= 20 TA MAVZU =============
 const TOPICS = [
     "Butun sonlar", "Kasrlar", "Foizlar", "Daraja", "Ildiz",
