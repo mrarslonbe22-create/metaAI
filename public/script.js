@@ -6,335 +6,162 @@ const TOPICS_DATA = {
     "Butun sonlar": {
         name: "Butun sonlar",
         formula: "Butun sonlar: ..., -3, -2, -1, 0, 1, 2, 3, ...",
-        rules: [
-            "Qo'shish: a + b",
-            "Ayirish: a - b",
-            "Ko'paytirish: a × b",
-            "Bo'lish: a ÷ b (b ≠ 0)",
-            "Manfiy sonlar: (−a) + (−b) = −(a+b)",
-            "Manfiy va musbat: (−a) + b = b − a"
-        ],
-        examples: [
-            "25 + 17 = 42",
-            "100 - 35 = 65",
-            "12 × 8 = 96",
-            "144 ÷ 12 = 12",
-            "(-15) + (-20) = -35"
-        ],
+        rules: ["Qo'shish: a + b", "Ayirish: a - b", "Ko'paytirish: a × b", "Bo'lish: a ÷ b (b ≠ 0)", "Manfiy sonlar: (−a) + (−b) = −(a+b)", "Manfiy va musbat: (−a) + b = b − a"],
+        examples: ["25 + 17 = 42", "100 - 35 = 65", "12 × 8 = 96", "144 ÷ 12 = 12", "(-15) + (-20) = -35"],
         practice: "345 + 278 = ?\n1000 - 647 = ?\n25 × 16 = ?\n625 ÷ 25 = ?",
-        explanation: "Butun sonlar - bu manfiy, nol va musbat sonlarni o'z ichiga oladi. Ular ustida qo'shish, ayirish, ko'paytirish va bo'lish amallarini bajarish mumkin."
+        explanation: "Butun sonlar - bu manfiy, nol va musbat sonlarni o'z ichiga oladi."
     },
     "Kasrlar": {
         name: "Kasrlar",
         formula: "a/b + c/d = (ad + bc)/bd\na/b × c/d = ac/bd",
-        rules: [
-            "Surat - kasrning yuqori qismi",
-            "Maxraj - kasrning pastki qismi",
-            "Kasrlarni qo'shish: umumiy maxrajga keltirish",
-            "Kasrlarni ko'paytirish: suratlarni va maxrajlarni ko'paytirish"
-        ],
-        examples: [
-            "1/2 + 1/3 = (3+2)/6 = 5/6",
-            "2/3 × 3/4 = 6/12 = 1/2",
-            "3/4 - 1/2 = (3-2)/4 = 1/4"
-        ],
+        rules: ["Surat - kasrning yuqori qismi", "Maxraj - kasrning pastki qismi", "Kasrlarni qo'shish: umumiy maxrajga keltirish", "Kasrlarni ko'paytirish: suratlarni va maxrajlarni ko'paytirish"],
+        examples: ["1/2 + 1/3 = (3+2)/6 = 5/6", "2/3 × 3/4 = 6/12 = 1/2", "3/4 - 1/2 = (3-2)/4 = 1/4"],
         practice: "3/4 + 2/5 = ?\n7/8 - 1/4 = ?\n2/3 × 3/5 = ?",
-        explanation: "Kasr - sonning bo'linma ko'rinishi. Surat va maxrajdan tashkil topadi. Kasrlarni qo'shish va ayirish uchun ularni umumiy maxrajga keltirish kerak."
+        explanation: "Kasr - sonning bo'linma ko'rinishi. Surat va maxrajdan tashkil topadi."
     },
     "Foizlar": {
         name: "Foizlar",
         formula: "P% = P/100\nP% of X = (P/100) × X",
-        rules: [
-            "Foizni kasrga aylantirish: P% = P/100",
-            "Foizni hisoblash: (qism/butun) × 100%",
-            "Qiymatni foizga oshirish: X × (1 + P/100)",
-            "Qiymatni foizga kamaytirish: X × (1 - P/100)"
-        ],
-        examples: [
-            "20% of 150 = (20/100) × 150 = 30",
-            "30% of 200 = 60",
-            "50 ni 20% ga oshirish: 50 × 1.2 = 60"
-        ],
+        rules: ["Foizni kasrga aylantirish: P% = P/100", "Foizni hisoblash: (qism/butun) × 100%", "Qiymatni foizga oshirish: X × (1 + P/100)", "Qiymatni foizga kamaytirish: X × (1 - P/100)"],
+        examples: ["20% of 150 = (20/100) × 150 = 30", "30% of 200 = 60", "50 ni 20% ga oshirish: 50 × 1.2 = 60"],
         practice: "30% of 200 = ?\n15% of 80 = ?\n45 dan 9 necha foiz?",
-        explanation: "Foiz - yuzdan bir qism. Foizlarni hisoblashda asosiy formula: (qism/butun) × 100%. Foizlar savdo, iqtisod va statistikada keng qo'llaniladi."
+        explanation: "Foiz - yuzdan bir qism. Foizlarni hisoblashda asosiy formula: (qism/butun) × 100%."
     },
     "Daraja": {
         name: "Daraja",
         formula: "aⁿ = a × a × ... × a (n marta)\naᵐ × aⁿ = aᵐ⁺ⁿ\naᵐ ÷ aⁿ = aᵐ⁻ⁿ\n(aᵐ)ⁿ = aᵐⁿ",
-        rules: [
-            "a⁰ = 1 (a ≠ 0)",
-            "a¹ = a",
-            "a⁻ⁿ = 1/aⁿ",
-            "(ab)ⁿ = aⁿ × bⁿ",
-            "(a/b)ⁿ = aⁿ/bⁿ"
-        ],
-        examples: [
-            "2³ = 2 × 2 × 2 = 8",
-            "5² = 25",
-            "10⁴ = 10000",
-            "3² × 3³ = 3⁵ = 243"
-        ],
+        rules: ["a⁰ = 1 (a ≠ 0)", "a¹ = a", "a⁻ⁿ = 1/aⁿ", "(ab)ⁿ = aⁿ × bⁿ", "(a/b)ⁿ = aⁿ/bⁿ"],
+        examples: ["2³ = 2 × 2 × 2 = 8", "5² = 25", "10⁴ = 10000", "3² × 3³ = 3⁵ = 243"],
         practice: "3⁴ = ?\n4³ = ?\n2⁵ = ?",
-        explanation: "Daraja - sonning o'ziga necha marta ko'paytirilishi. a - asos, n - daraja ko'rsatkichi. Darajalar yordamida katta sonlarni qisqa yozish mumkin."
+        explanation: "Daraja - sonning o'ziga necha marta ko'paytirilishi. a - asos, n - daraja ko'rsatkichi."
     },
     "Ildiz": {
         name: "Kvadrat ildiz",
         formula: "√a = b, agar b² = a\n√(a×b) = √a × √b\n√(a/b) = √a / √b",
-        rules: [
-            "(√a)² = a",
-            "√(a²) = |a|",
-            "√0 = 0",
-            "√1 = 1"
-        ],
-        examples: [
-            "√64 = 8, chunki 8² = 64",
-            "√(25×4) = √25 × √4 = 5 × 2 = 10",
-            "√(100/25) = √100 / √25 = 10/5 = 2"
-        ],
+        rules: ["(√a)² = a", "√(a²) = |a|", "√0 = 0", "√1 = 1"],
+        examples: ["√64 = 8, chunki 8² = 64", "√(25×4) = √25 × √4 = 5 × 2 = 10", "√(100/25) = √100 / √25 = 10/5 = 2"],
         practice: "√169 = ?\n√400 = ?\n√81 = ?",
-        explanation: "Kvadrat ildiz - o'ziga ko'paytirilganda berilgan sonni beradigan son. Ildiz va daraja o'zaro teskari amallardir."
+        explanation: "Kvadrat ildiz - o'ziga ko'paytirilganda berilgan sonni beradigan son."
     },
     "Proportsiya": {
         name: "Proportsiya",
         formula: "a/b = c/d → ad = bc\na : b = c : d",
-        rules: [
-            "Teskari proportsiya: xy = k",
-            "To'g'ri proportsiya: y = kx",
-            "Proportsiyaning asosiy xossasi: a·d = b·c"
-        ],
-        examples: [
-            "x/5 = 10/25 → 25x = 50 → x = 2",
-            "3/4 = 9/x → 3x = 36 → x = 12"
-        ],
+        rules: ["Teskari proportsiya: xy = k", "To'g'ri proportsiya: y = kx", "Proportsiyaning asosiy xossasi: a·d = b·c"],
+        examples: ["x/5 = 10/25 → 25x = 50 → x = 2", "3/4 = 9/x → 3x = 36 → x = 12"],
         practice: "x/8 = 5/20, x = ?\n3/4 = 9/x, x = ?",
-        explanation: "Proportsiya - ikki nisbatning tengligi. a:b = c:d ko'rinishida yoziladi. Proportsiyalar ko'plab amaliy masalalarni yechishda qo'llaniladi."
+        explanation: "Proportsiya - ikki nisbatning tengligi. a:b = c:d ko'rinishida yoziladi."
     },
     "Bir noma'lumli tenglama": {
         name: "Bir noma'lumli tenglama",
         formula: "ax + b = c → x = (c - b)/a",
-        rules: [
-            "Noma'lumni bir tomonga o'tkazish",
-            "Ikkala tomonni a ga bo'lish",
-            "Tenglamaning ildizini topish"
-        ],
-        examples: [
-            "3x + 5 = 20 → 3x = 15 → x = 5",
-            "4x - 7 = 21 → 4x = 28 → x = 7"
-        ],
+        rules: ["Noma'lumni bir tomonga o'tkazish", "Ikkala tomonni a ga bo'lish", "Tenglamaning ildizini topish"],
+        examples: ["3x + 5 = 20 → 3x = 15 → x = 5", "4x - 7 = 21 → 4x = 28 → x = 7"],
         practice: "4x + 7 = 31\n5x - 8 = 22\n2x + 9 = 25",
-        explanation: "Bir noma'lumli chiziqli tenglama - noma'lum birinchi darajada qatnashgan tenglama. Tenglamani yechish uchun noma'lumni bir tomonga, sonlarni boshqa tomonga o'tkazish kerak."
+        explanation: "Bir noma'lumli chiziqli tenglama - noma'lum birinchi darajada qatnashgan tenglama."
     },
     "Ikki noma'lumli tenglama": {
         name: "Ikki noma'lumli tenglama",
         formula: "Sistema: {a₁x + b₁y = c₁, a₂x + b₂y = c₂}",
-        rules: [
-            "Qo'shish usuli",
-            "Almashtirish usuli",
-            "Kramer usuli",
-            "Grafik usul"
-        ],
-        examples: [
-            "x + y = 10, x - y = 4 → 2x = 14 → x = 7, y = 3",
-            "2x + y = 7, x - y = 2 → 3x = 9 → x = 3, y = 1"
-        ],
+        rules: ["Qo'shish usuli", "Almashtirish usuli", "Kramer usuli", "Grafik usul"],
+        examples: ["x + y = 10, x - y = 4 → 2x = 14 → x = 7, y = 3", "2x + y = 7, x - y = 2 → 3x = 9 → x = 3, y = 1"],
         practice: "x + y = 15, x - y = 5\n2x + y = 10, x - y = 2",
-        explanation: "Ikki noma'lumli tenglamalar sistemasi - ikki tenglamadan tashkil topgan sistema. En ko'p qo'llaniladigan usullar: qo'shish va almashtirish usullari."
+        explanation: "Ikki noma'lumli tenglamalar sistemasi - ikki tenglamadan tashkil topgan sistema."
     },
     "Kvadrat tenglama": {
         name: "Kvadrat tenglama",
         formula: "ax² + bx + c = 0\nD = b² - 4ac\nx = [-b ± √(b² - 4ac)]/2a",
-        rules: [
-            "D > 0 → 2 ta haqiqiy ildiz",
-            "D = 0 → 1 ta ildiz (ikki karrali)",
-            "D < 0 → haqiqiy ildiz yo'q",
-            "Vyeta teoremasi: x₁ + x₂ = -b/a, x₁·x₂ = c/a"
-        ],
-        examples: [
-            "x² - 5x + 6 = 0 → D = 25 - 24 = 1 → x = (5 ± 1)/2 → x₁ = 3, x₂ = 2",
-            "x² - 4x + 4 = 0 → D = 16 - 16 = 0 → x = 2"
-        ],
+        rules: ["D > 0 → 2 ta haqiqiy ildiz", "D = 0 → 1 ta ildiz (ikki karrali)", "D < 0 → haqiqiy ildiz yo'q", "Vyeta teoremasi: x₁ + x₂ = -b/a, x₁·x₂ = c/a"],
+        examples: ["x² - 5x + 6 = 0 → D = 25 - 24 = 1 → x = (5 ± 1)/2 → x₁ = 3, x₂ = 2", "x² - 4x + 4 = 0 → D = 16 - 16 = 0 → x = 2"],
         practice: "x² - 7x + 12 = 0\nx² - 4x - 5 = 0",
-        explanation: "Kvadrat tenglama - noma'lum ikkinchi darajada qatnashgan tenglama. Yechim Diskriminant orqali topiladi. Kvadrat tenglamalar fizika, muhandislik va iqtisodda keng qo'llaniladi."
+        explanation: "Kvadrat tenglama - noma'lum ikkinchi darajada qatnashgan tenglama."
     },
     "Kvadrat funksiya": {
         name: "Kvadrat funksiya",
         formula: "y = ax² + bx + c, a ≠ 0\ntepa nuqta: x₀ = -b/(2a), y₀ = c - b²/(4a)",
-        rules: [
-            "a > 0 → parabola yuqoriga ochiladi",
-            "a < 0 → parabola pastga ochiladi",
-            "Parabolaning simmetriya o'qi: x = -b/(2a)",
-            "Funksiyaning eng katta/eng kichik qiymati tepa nuqtada"
-        ],
-        examples: [
-            "y = x² - 4x + 3 → tepa nuqta: x = 2, y = -1",
-            "y = -x² + 4x - 3 → tepa nuqta: x = 2, y = 1"
-        ],
+        rules: ["a > 0 → parabola yuqoriga ochiladi", "a < 0 → parabola pastga ochiladi", "Parabolaning simmetriya o'qi: x = -b/(2a)"],
+        examples: ["y = x² - 4x + 3 → tepa nuqta: x = 2, y = -1", "y = -x² + 4x - 3 → tepa nuqta: x = 2, y = 1"],
         practice: "y = x² - 6x + 5 tepa nuqtasini toping\ny = -x² + 4x funksiyaning maksimumini toping",
-        explanation: "Kvadrat funksiya - grafigi parabola bo'lgan funksiya. Parabolaning uchi (tepa nuqtasi) funksiyaning eng kichik yoki eng katta qiymatini beradi."
+        explanation: "Kvadrat funksiya - grafigi parabola bo'lgan funksiya."
     },
     "Logarifm (asosiy)": {
         name: "Logarifm",
         formula: "log_a(b) = c → a^c = b\nlg(x) = log₁₀(x)\nln(x) = log_e(x)",
-        rules: [
-            "log_a(m·n) = log_a(m) + log_a(n)",
-            "log_a(m/n) = log_a(m) - log_a(n)",
-            "log_a(mⁿ) = n·log_a(m)",
-            "log_a(a) = 1",
-            "log_a(1) = 0"
-        ],
-        examples: [
-            "log₂(8) = 3, chunki 2³ = 8",
-            "log₃(81) = 4, chunki 3⁴ = 81",
-            "log₂(16) = 4",
-            "lg(100) = 2",
-            "ln(e) = 1"
-        ],
+        rules: ["log_a(m·n) = log_a(m) + log_a(n)", "log_a(m/n) = log_a(m) - log_a(n)", "log_a(mⁿ) = n·log_a(m)", "log_a(a) = 1", "log_a(1) = 0"],
+        examples: ["log₂(8) = 3, chunki 2³ = 8", "log₃(81) = 4, chunki 3⁴ = 81", "log₂(16) = 4", "lg(100) = 2", "ln(e) = 1"],
         practice: "log₄(64) = ?\nlog₃(81) = ?\nlog₂(32) = ?",
-        explanation: "Logarifm - darajaning teskari funksiyasi. log_a(b) = c degani a^c = b. Logarifm yordamida ko'paytmani qo'shishga aylantirish mumkin."
+        explanation: "Logarifm - darajaning teskari funksiyasi. log_a(b) = c degani a^c = b."
     },
     "Logarifmik tenglama": {
         name: "Logarifmik tenglama",
         formula: "log_a(x) = b → x = a^b\nlog_a(f(x)) = log_a(g(x)) → f(x) = g(x)",
-        rules: [
-            "Aniqlanish sohasi: x > 0",
-            "Asos: a > 0, a ≠ 1",
-            "Logarifmik tenglamani yechishda potensirlash usuli"
-        ],
-        examples: [
-            "log₂(x) = 3 → x = 2³ = 8",
-            "log₃(x - 1) = 2 → x - 1 = 9 → x = 10"
-        ],
+        rules: ["Aniqlanish sohasi: x > 0", "Asos: a > 0, a ≠ 1", "Logarifmik tenglamani yechishda potensirlash usuli"],
+        examples: ["log₂(x) = 3 → x = 2³ = 8", "log₃(x - 1) = 2 → x - 1 = 9 → x = 10"],
         practice: "log₃(x) = 4\nlog₅(x) = 2\nlog₂(x - 1) = 3",
-        explanation: "Logarifmik tenglamalar - noma'lum logarifm ichida qatnashgan tenglamalar. Yechishdan oldin aniqlanish sohasini topish muhim."
+        explanation: "Logarifmik tenglamalar - noma'lum logarifm ichida qatnashgan tenglamalar."
     },
     "Trigonometriya": {
         name: "Trigonometriya",
         formula: "sin²α + cos²α = 1\nsin(α ± β) = sinα·cosβ ± cosα·sinβ\ncos(α ± β) = cosα·cosβ ∓ sinα·sinβ",
-        rules: [
-            "sin(0°) = 0, cos(0°) = 1",
-            "sin(30°) = 1/2, cos(30°) = √3/2",
-            "sin(45°) = √2/2, cos(45°) = √2/2",
-            "sin(60°) = √3/2, cos(60°) = 1/2",
-            "sin(90°) = 1, cos(90°) = 0"
-        ],
-        examples: [
-            "sin(30°) = 0.5",
-            "cos(60°) = 0.5",
-            "tan(45°) = 1",
-            "sin²30° + cos²30° = 0.25 + 0.75 = 1"
-        ],
+        rules: ["sin(0°) = 0, cos(0°) = 1", "sin(30°) = 1/2, cos(30°) = √3/2", "sin(45°) = √2/2, cos(45°) = √2/2", "sin(60°) = √3/2, cos(60°) = 1/2", "sin(90°) = 1, cos(90°) = 0"],
+        examples: ["sin(30°) = 0.5", "cos(60°) = 0.5", "tan(45°) = 1", "sin²30° + cos²30° = 0.25 + 0.75 = 1"],
         practice: "sin(45°) = ?\ncos(30°) = ?\ntan(45°) = ?",
-        explanation: "Trigonometriya - to'g'ri burchakli uchburchak tomonlari va burchaklari orasidagi munosabatlarni o'rganadi. Sinus, kosinus, tangens va kotangens asosiy trigonometrik funksiyalardir."
+        explanation: "Trigonometriya - to'g'ri burchakli uchburchak tomonlari va burchaklari orasidagi munosabatlarni o'rganadi."
     },
     "Trigonometrik tenglama": {
         name: "Trigonometrik tenglama",
         formula: "sin(x) = a → x = arcsin(a) + 360°·k\ncos(x) = a → x = arccos(a) + 360°·k\ntan(x) = a → x = arctan(a) + 180°·k",
-        rules: [
-            "sin(x) = 0 → x = 180°·k",
-            "cos(x) = 0 → x = 90° + 180°·k",
-            "sin(x) = 1 → x = 90° + 360°·k",
-            "sin(x) = -1 → x = 270° + 360°·k"
-        ],
-        examples: [
-            "sin(x) = 0.5 → x = 30° + 360°·k yoki x = 150° + 360°·k",
-            "cos(x) = 0 → x = 90° + 180°·k"
-        ],
+        rules: ["sin(x) = 0 → x = 180°·k", "cos(x) = 0 → x = 90° + 180°·k", "sin(x) = 1 → x = 90° + 360°·k", "sin(x) = -1 → x = 270° + 360°·k"],
+        examples: ["sin(x) = 0.5 → x = 30° + 360°·k yoki x = 150° + 360°·k", "cos(x) = 0 → x = 90° + 180°·k"],
         practice: "cos(x) = 0.5\nsin(x) = √3/2\ntan(x) = 1",
-        explanation: "Trigonometrik tenglamalar - noma'lum trigonometrik funksiya ichida qatnashadi. Yechimlar cheksiz ko'p bo'lishi mumkin va davriylik hisobga olinadi."
+        explanation: "Trigonometrik tenglamalar - noma'lum trigonometrik funksiya ichida qatnashadi."
     },
     "Arifmetik progressiya": {
         name: "Arifmetik progressiya",
         formula: "a_n = a₁ + (n-1)d\nS_n = n(a₁ + a_n)/2 = n(2a₁ + (n-1)d)/2",
-        rules: [
-            "d = a₂ - a₁ (ayirma)",
-            "aₙ - aₙ₋₁ = d",
-            "Har bir had o'zidan oldingi haddan doimiy songa farq qiladi"
-        ],
-        examples: [
-            "a₁=2, d=3 → a₅ = 2 + 4×3 = 14",
-            "a₁=5, d=4 → S₁₀ = 10(5 + 41)/2 = 230"
-        ],
+        rules: ["d = a₂ - a₁ (ayirma)", "aₙ - aₙ₋₁ = d", "Har bir had o'zidan oldingi haddan doimiy songa farq qiladi"],
+        examples: ["a₁=2, d=3 → a₅ = 2 + 4×3 = 14", "a₁=5, d=4 → S₁₀ = 10(5 + 41)/2 = 230"],
         practice: "a₁=5, d=4, a₁₀ = ?\na₁=10, d=-2, a₆ = ?",
-        explanation: "Arifmetik progressiya - har bir had o'zidan oldingi hadga doimiy son (d) qo'shish orqali hosil qilinadi. Bu son progressiyaning ayirmasi deyiladi."
+        explanation: "Arifmetik progressiya - har bir had o'zidan oldingi hadga doimiy son (d) qo'shish orqali hosil qilinadi."
     },
     "Geometrik progressiya": {
         name: "Geometrik progressiya",
         formula: "a_n = a₁ × q^(n-1)\nS_n = a₁(qⁿ - 1)/(q - 1), q ≠ 1",
-        rules: [
-            "q = a₂/a₁ (maxraj)",
-            "aₙ / aₙ₋₁ = q",
-            "|q| < 1 bo'lsa, cheksiz kamayuvchi progressiya: S = a₁/(1-q)"
-        ],
-        examples: [
-            "a₁=3, q=2 → a₄ = 3 × 2³ = 24",
-            "a₁=2, q=3 → S₄ = 2(81 - 1)/(3 - 1) = 80"
-        ],
+        rules: ["q = a₂/a₁ (maxraj)", "aₙ / aₙ₋₁ = q", "|q| < 1 bo'lsa, cheksiz kamayuvchi progressiya: S = a₁/(1-q)"],
+        examples: ["a₁=3, q=2 → a₄ = 3 × 2³ = 24", "a₁=2, q=3 → S₄ = 2(81 - 1)/(3 - 1) = 80"],
         practice: "a₁=2, q=3, a₅ = ?\na₁=5, q=1/2, a₄ = ?",
-        explanation: "Geometrik progressiya - har bir had o'zidan oldingi hadga doimiy son (q) ko'paytirish orqali hosil qilinadi. Bu son progressiyaning maxraji deyiladi."
+        explanation: "Geometrik progressiya - har bir had o'zidan oldingi hadga doimiy son (q) ko'paytirish orqali hosil qilinadi."
     },
     "Limit": {
         name: "Limit",
         formula: "lim(x→a) f(x) = L\nlim(x→0) sin(x)/x = 1\nlim(x→±∞) (1 + 1/x)^x = e",
-        rules: [
-            "Cheksizlikda limit: lim(x→∞) 1/x = 0",
-            "Limitning linear xossasi",
-            "L'Hopital qoidasi (0/0 yoki ∞/∞ ko'rinishlarda)"
-        ],
-        examples: [
-            "lim(x→2) (x² - 4)/(x - 2) = lim(x→2) (x + 2) = 4",
-            "lim(x→∞) 1/x = 0"
-        ],
+        rules: ["Cheksizlikda limit: lim(x→∞) 1/x = 0", "Limitning linear xossasi", "L'Hopital qoidasi (0/0 yoki ∞/∞ ko'rinishlarda)"],
+        examples: ["lim(x→2) (x² - 4)/(x - 2) = lim(x→2) (x + 2) = 4", "lim(x→∞) 1/x = 0"],
         practice: "lim(x→1) (x² - 1)/(x - 1)\nlim(x→0) sin(x)/x",
-        explanation: "Limit - funksiyaning argument biror qiymatga intilgandagi qiymati. Limitlar matematik analizning asosiy tushunchalaridan biridir."
+        explanation: "Limit - funksiyaning argument biror qiymatga intilgandagi qiymati."
     },
     "Hosila": {
         name: "Hosila",
         formula: "f'(x) = lim(h→0) [f(x+h) - f(x)]/h\n(xⁿ)' = n·xⁿ⁻¹\n(sin x)' = cos x\n(cos x)' = -sin x",
-        rules: [
-            "Doimiyning hosilasi: (c)' = 0",
-            "(cf(x))' = c·f'(x)",
-            "(f±g)' = f' ± g'",
-            "(f·g)' = f'·g + f·g'",
-            "(f/g)' = (f'·g - f·g')/g²"
-        ],
-        examples: [
-            "f(x) = x² → f'(x) = 2x",
-            "f(x) = sin(x) → f'(x) = cos(x)",
-            "f(x) = 3x³ → f'(x) = 9x²"
-        ],
+        rules: ["Doimiyning hosilasi: (c)' = 0", "(cf(x))' = c·f'(x)", "(f±g)' = f' ± g'", "(f·g)' = f'·g + f·g'", "(f/g)' = (f'·g - f·g')/g²"],
+        examples: ["f(x) = x² → f'(x) = 2x", "f(x) = sin(x) → f'(x) = cos(x)", "f(x) = 3x³ → f'(x) = 9x²"],
         practice: "f(x) = x³ → f'(x) = ?\nf(x) = sin(x) → f'(x) = ?\nf(x) = 2x² + 3x → f'(x) = ?",
-        explanation: "Hosila - funksiyaning o'zgarish tezligi. Hosila yordamida tangens, ekstremumlar, funksiyaning grafigi va fizik jarayonlarning tezligi topiladi."
+        explanation: "Hosila - funksiyaning o'zgarish tezligi."
     },
     "Integral (asosiy)": {
         name: "Integral (asosiy)",
         formula: "∫ xⁿ dx = xⁿ⁺¹/(n+1) + C\n∫ sin(x) dx = -cos(x) + C\n∫ cos(x) dx = sin(x) + C\n∫ 1/x dx = ln|x| + C",
-        rules: [
-            "∫ cf(x)dx = c∫ f(x)dx",
-            "∫ [f(x)±g(x)]dx = ∫ f(x)dx ± ∫ g(x)dx",
-            "∫ a dx = ax + C"
-        ],
-        examples: [
-            "∫ x² dx = x³/3 + C",
-            "∫ 5 dx = 5x + C",
-            "∫ sin(x) dx = -cos(x) + C"
-        ],
+        rules: ["∫ cf(x)dx = c∫ f(x)dx", "∫ [f(x)±g(x)]dx = ∫ f(x)dx ± ∫ g(x)dx", "∫ a dx = ax + C"],
+        examples: ["∫ x² dx = x³/3 + C", "∫ 5 dx = 5x + C", "∫ sin(x) dx = -cos(x) + C"],
         practice: "∫ x³ dx = ?\n∫ 5 dx = ?\n∫ (2x + 3) dx = ?",
-        explanation: "Integral - hosilaning teskari amali. Integral yordamida yuzani, hajmni, ishni va boshqa ko'plab kattaliklarni hisoblash mumkin."
+        explanation: "Integral - hosilaning teskari amali."
     },
     "Aniq integral": {
         name: "Aniq integral",
         formula: "∫_a^b f(x)dx = F(b) - F(a)\n∫_a^b f(x)dx = -∫_b^a f(x)dx\n∫_a^b cf(x)dx = c∫_a^b f(x)dx",
-        rules: [
-            "∫_a^b f(x)dx = ∫_a^c f(x)dx + ∫_c^b f(x)dx",
-            "∫_a^a f(x)dx = 0",
-            "Nyuton-Leybnis formulasi"
-        ],
-        examples: [
-            "∫₀¹ x² dx = [x³/3]₀¹ = 1/3 - 0 = 1/3",
-            "∫₀² x dx = [x²/2]₀² = 4/2 - 0 = 2"
-        ],
+        rules: ["∫_a^b f(x)dx = ∫_a^c f(x)dx + ∫_c^b f(x)dx", "∫_a^a f(x)dx = 0", "Nyuton-Leybnis formulasi"],
+        examples: ["∫₀¹ x² dx = [x³/3]₀¹ = 1/3 - 0 = 1/3", "∫₀² x dx = [x²/2]₀² = 4/2 - 0 = 2"],
         practice: "∫₀² x dx = ?\n∫₁² x² dx = ?\n∫₀^π sin(x) dx = ?",
-        explanation: "Aniq integral - egri chiziq ostidagi yuzani hisoblaydi. Nyuton-Leybnis formulasiga asosan, aniq integral boshlang'ich funksiyaning yuqori va pastki chegaralardagi qiymatlari ayirmasiga teng."
+        explanation: "Aniq integral - egri chiziq ostidagi yuzani hisoblaydi."
     }
 };
 
@@ -346,13 +173,8 @@ function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function randomFloat(min, max, decimals = 2) {
-    const value = min + Math.random() * (max - min);
-    return parseFloat(value.toFixed(decimals));
-}
-
 // ============= HAR BIR MAVZU UCHUN RANDOM SAVOL YARATISH =============
-function generateRandomQuestion(topicName, level, topicData) {
+function generateRandomQuestion(topicName, level) {
     let question = { text: "", answer: 0, topic: topicName };
     const difficulty = Math.min(10, Math.max(1, level));
     
@@ -382,7 +204,7 @@ function generateRandomQuestion(topicName, level, topicData) {
             } else {
                 let resultNum = num1 * num2;
                 let resultDen = den1 * den2;
-                question.text = `${num1}/${den1} × ${num2}/${den2} = ? (o'nlik)`;
+                question.text = `${num1}/${den1} × ${num2}/{den2} = ? (o'nlik)`;
                 question.answer = parseFloat((resultNum / resultDen).toFixed(3));
             }
             break;
@@ -646,7 +468,7 @@ function generateTestQuestions() {
     let level = Math.min(10, Math.max(1, Math.floor(currentUser.globalLevel)));
     for (let i = 0; i < TOPICS.length; i++) {
         const topic = TOPICS[i];
-        const randomQuestion = generateRandomQuestion(topic, level, TOPICS_DATA[topic]);
+        const randomQuestion = generateRandomQuestion(topic, level);
         currentQuestions.push({
             text: randomQuestion.text,
             answer: randomQuestion.answer,
@@ -657,7 +479,17 @@ function generateTestQuestions() {
     }
 }
 
-// ============= REGISTRATSIYA VA TEST FUNKSIYALARI =============
+// ============= TOAST XABARI =============
+function showToast(message, type) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.style.background = type === 'success' ? '#10b981' : (type === 'warning' ? '#f59e0b' : '#ef4444');
+    toast.innerHTML = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+
+// ============= REGISTRATSIYA =============
 function registerUser() {
     const firstName = document.getElementById("regFirstName").value.trim();
     const lastName = document.getElementById("regLastName").value.trim();
@@ -679,6 +511,7 @@ function logout() {
     location.reload();
 }
 
+// ============= TEST FUNKSIYALARI =============
 function initTest() {
     if (!currentUser) {
         alert("Iltimos, avval ro'yxatdan o'ting!");
@@ -827,47 +660,15 @@ function showTopicLesson(topicName) {
                 <div style="background:linear-gradient(135deg,#4f46e5,#7c3aed); color:white; padding:15px; border-radius:12px; margin-bottom:20px; text-align:center;">
                     <i class="fas fa-chalkboard-user" style="font-size:40px;"></i>
                     <h2>${data.name}</h2>
-                    <div style="margin-top:10px;">
-                        <div class="progress-bar" style="background:rgba(255,255,255,0.3); height:8px; border-radius:10px;">
-                            <div style="width:${mastery * 10}%; background:white; height:100%; border-radius:10px;"></div>
-                        </div>
-                        <div>O'zlashtirish: ${Math.round(mastery * 10)}%</div>
-                    </div>
+                    <div style="margin-top:10px;"><div class="progress-bar" style="background:rgba(255,255,255,0.3); height:8px; border-radius:10px;"><div style="width:${mastery * 10}%; background:white; height:100%; border-radius:10px;"></div></div><div>O'zlashtirish: ${Math.round(mastery * 10)}%</div></div>
                 </div>
-                
-                <div class="formula-box" style="background:#f0fdf4; padding:15px; border-radius:12px; margin-bottom:15px;">
-                    <h3><i class="fas fa-calculator"></i> 📐 Asosiy formulalar</h3>
-                    <p style="font-size:16px; font-family:monospace;">${data.formula}</p>
-                </div>
-                
-                <div class="formula-box" style="background:#eef2ff; padding:15px; border-radius:12px; margin-bottom:15px;">
-                    <h3><i class="fas fa-list-check"></i> 📏 Qoidalar va xususiyatlar</h3>
-                    <ul style="margin-left:20px;">
-                        ${data.rules.map(r => `<li>${r}</li>`).join('')}
-                    </ul>
-                </div>
-                
-                <div class="formula-box" style="background:#fff3e0; padding:15px; border-radius:12px; margin-bottom:15px;">
-                    <h3><i class="fas fa-lightbulb"></i> 📝 Misollar</h3>
-                    <ul style="margin-left:20px;">
-                        ${data.examples.map(e => `<li>${e}</li>`).join('')}
-                    </ul>
-                </div>
-                
-                <div class="formula-box" style="background:#f3e8ff; padding:15px; border-radius:12px; margin-bottom:15px;">
-                    <h3><i class="fas fa-pen-ruler"></i> ✏️ Amaliy topshiriqlar</h3>
-                    <pre style="white-space:pre-wrap; background:transparent; border:none; font-family:inherit;">${data.practice}</pre>
-                </div>
-                
-                <div class="formula-box" style="background:#e8f0fe; padding:15px; border-radius:12px; margin-bottom:15px;">
-                    <h3><i class="fas fa-info-circle"></i> 📖 Batafsil tushuntirish</h3>
-                    <p>${data.explanation}</p>
-                </div>
-                
+                <div class="formula-box" style="background:#f0fdf4; padding:15px; border-radius:12px; margin-bottom:15px;"><h3>📐 Asosiy formulalar</h3><p>${data.formula}</p></div>
+                <div class="formula-box" style="background:#eef2ff; padding:15px; border-radius:12px; margin-bottom:15px;"><h3>📏 Qoidalar</h3><ul>${data.rules.map(r => `<li>${r}</li>`).join('')}</ul></div>
+                <div class="formula-box" style="background:#fff3e0; padding:15px; border-radius:12px; margin-bottom:15px;"><h3>📝 Misollar</h3><ul>${data.examples.map(e => `<li>${e}</li>`).join('')}</ul></div>
+                <div class="formula-box" style="background:#f3e8ff; padding:15px; border-radius:12px; margin-bottom:15px;"><h3>✏️ Amaliy topshiriqlar</h3><pre style="white-space:pre-wrap;">${data.practice}</pre></div>
+                <div class="formula-box" style="background:#e8f0fe; padding:15px; border-radius:12px; margin-bottom:15px;"><h3>📖 Batafsil</h3><p>${data.explanation}</p></div>
                 <div style="display:flex; gap:10px; margin-top:20px;">
-                    <button class="btn btn-primary" onclick="startTopicPractice('${topicName}')" style="flex:1;">
-                        <i class="fas fa-play"></i> Amaliy mashq
-                    </button>
+                    <button class="btn btn-primary" onclick="startTopicPractice('${topicName}')" style="flex:1;">🎯 Amaliy mashq</button>
                     <button class="btn btn-outline" onclick="closeLessonModal()" style="flex:1;">Tushunildi</button>
                 </div>
             </div>
@@ -882,9 +683,8 @@ let practiceQuestion = null;
 
 async function startTopicPractice(topicName) {
     closeLessonModal();
-    const data = TOPICS_DATA[topicName];
     const level = currentUser ? Math.floor(currentUser.globalLevel) : 1;
-    practiceQuestion = generateRandomQuestion(topicName, level, data);
+    practiceQuestion = generateRandomQuestion(topicName, level);
     const userAnswer = prompt(`✏️ Amaliy mashq - ${topicName}\n\nSavol: ${practiceQuestion.text}\n\nJavobingizni yozing:`);
     if (userAnswer !== null) {
         const userNum = parseFloat(userAnswer);
@@ -903,10 +703,6 @@ async function startTopicPractice(topicName) {
             updateStatisticsPage();
         }
     }
-}
-
-function closeExplanation() {
-    document.getElementById("explanationBox").style.display = "none";
 }
 
 function closeLessonModal() {
@@ -993,16 +789,7 @@ function updateTopicsGrid() {
     if (!grid) return;
     grid.innerHTML = TOPICS.map(topic => {
         const mastery = currentUser ? (currentUser.masteredTopics[topic] || 0) : 0;
-        return `
-            <div class="topic-card" onclick="showTopicLesson('${topic}')">
-                <i class="fas fa-chalkboard-user"></i>
-                <h4>${topic}</h4>
-                <div style="margin:10px 0;">
-                    <div class="progress-bar" style="height:6px;"><div style="width:${mastery * 10}%; height:100%; background:linear-gradient(90deg,#4f46e5,#10b981); border-radius:10px;"></div></div>
-                    <small>O'zlashtirish: ${Math.round(mastery * 10)}%</small>
-                </div>
-            </div>
-        `;
+        return `<div class="topic-card" onclick="showTopicLesson('${topic}')"><i class="fas fa-chalkboard-user"></i><h4>${topic}</h4><div style="margin:10px 0;"><div class="progress-bar" style="height:6px;"><div style="width:${mastery * 10}%; height:100%; background:linear-gradient(90deg,#4f46e5,#10b981); border-radius:10px;"></div></div><small>O'zlashtirish: ${Math.round(mastery * 10)}%</small></div></div>`;
     }).join('');
 }
 
@@ -1014,9 +801,7 @@ function updateLessonsPage() {
             <i class="fas fa-book-open"></i>
             <h4>${topic}</h4>
             <p style="font-size:12px; color:#666; margin:10px 0;">${TOPICS_DATA[topic].formula.substring(0, 50)}...</p>
-            <button class="btn btn-primary" style="margin-top:12px; width:100%;" onclick="event.stopPropagation(); showTopicLesson('${topic}')">
-                📚 O'rganish
-            </button>
+            <button class="btn btn-primary" style="margin-top:12px; width:100%;" onclick="event.stopPropagation(); showTopicLesson('${topic}')">📚 O'rganish</button>
         </div>
     `).join('');
 }
@@ -1034,82 +819,33 @@ function filterLessons() {
 function switchToPage(pageName) {
     console.log("Sahifa o'zgartirilmoqda:", pageName);
     
-    // Barcha sahifalarni yashirish
     const pages = ['homePage', 'testPage', 'statisticsPage', 'lessonsPage', 'aiPage'];
     pages.forEach(page => {
         const el = document.getElementById(page);
         if (el) el.classList.remove('active');
     });
     
-    // Tanlangan sahifani ko'rsatish
     const target = document.getElementById(`${pageName}Page`);
-    if (target) {
-        target.classList.add('active');
-    } else {
-        console.error("Sahifa topilmadi:", pageName + "Page");
-        return;
-    }
+    if (target) target.classList.add('active');
+    else { console.error("Sahifa topilmadi:", pageName + "Page"); return; }
     
-    // Nav-item larni faollashtirish
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
-        if (item.getAttribute('data-page') === pageName) {
-            item.classList.add('active');
-        }
+        if (item.getAttribute('data-page') === pageName) item.classList.add('active');
     });
     
-    // Sarlavhani yangilash
-function switchToPage(pageName) {
-    console.log("Sahifa o'zgartirilmoqda:", pageName);
-    
-    // Barcha sahifalarni yashirish
-    const pages = ['homePage', 'testPage', 'statisticsPage', 'lessonsPage', 'aiPage'];
-    pages.forEach(page => {
-        const el = document.getElementById(page);
-        if (el) el.classList.remove('active');
-    });
-    
-    // Tanlangan sahifani ko'rsatish
-    const target = document.getElementById(`${pageName}Page`);
-    if (target) {
-        target.classList.add('active');
-    } else {
-        console.error("Sahifa topilmadi:", pageName + "Page");
-        return;
-    }
-    
-    // Nav-item larni faollashtirish
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.remove('active');
-        if (item.getAttribute('data-page') === pageName) {
-            item.classList.add('active');
-        }
-    });
-    
-    // Sarlavhani yangilash
-    const titles = {
-        home: "MathAI",
-        test: "Test topshirish",
-        statistics: "Mening statistikam",
-        lessons: "Darslar",
-        ai: "AI yordamchi"
-    };
+    const titles = { home: "MathAI", test: "Test topshirish", statistics: "Mening statistikam", lessons: "Darslar", ai: "AI yordamchi" };
     const pageTitle = document.getElementById("pageTitle");
     if (pageTitle) pageTitle.innerText = titles[pageName] || "MathAI";
     
-    // Lessons sahifasida qidiruv funksiyasini yoqish
     if (pageName === "lessons") {
         const searchInput = document.getElementById("lessonSearch");
-        if (searchInput && typeof filterLessons === 'function') {
-            searchInput.addEventListener('input', filterLessons);
-        }
+        if (searchInput && typeof filterLessons === 'function') searchInput.addEventListener('input', filterLessons);
         if (typeof updateLessonsPage === 'function') updateLessonsPage();
     }
-    
-    if (pageName === "statistics" && currentUser && typeof updateStatisticsPage === 'function') {
-        updateStatisticsPage();
-    }
+    if (pageName === "statistics" && currentUser && typeof updateStatisticsPage === 'function') updateStatisticsPage();
 }
+
 // ============= DARK MODE =============
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
@@ -1117,9 +853,7 @@ function toggleDarkMode() {
 }
 
 function loadDarkMode() {
-    if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-    }
+    if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
 }
 
 // ============= INIT =============
@@ -1128,6 +862,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTopicsGrid();
     updateLessonsPage();
     if(document.getElementById("lessonSearch")) document.getElementById("lessonSearch").addEventListener("input", filterLessons);
+    
     const savedUser = localStorage.getItem("mathai_current_user");
     if (savedUser) {
         const user = JSON.parse(savedUser);
@@ -1137,6 +872,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentUser.updateUI();
         updateStatisticsPage();
     }
+    
     document.querySelectorAll(".nav-item").forEach(item => {
         item.addEventListener("click", (e) => {
             e.preventDefault();
@@ -1144,14 +880,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (page) switchToPage(page);
         });
     });
+    
     const themeToggle = document.getElementById("themeToggle");
     if (themeToggle) themeToggle.addEventListener("click", toggleDarkMode);
+    
     const menuToggle = document.getElementById("menuToggle");
     const sidebar = document.getElementById("sidebar");
     if (menuToggle && sidebar) menuToggle.addEventListener("click", () => sidebar.classList.toggle("open"));
+    
     window.onclick = (e) => {
         const modal = document.getElementById("lessonModal");
         if (e.target === modal) closeLessonModal();
     };
-    console.log("✅ MathAI (To'liq o'rgatish tizimi) tayyor!");
+    
+    console.log("✅ MathAI tayyor!");
 });
