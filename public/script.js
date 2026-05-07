@@ -895,7 +895,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     console.log("✅ MathAI tayyor!");
 });
-// ============= GLOBAL FUNKSIYALARNI REGISTRATSIYA QILISH (KNOPKALAR UCHUN) =============
+// ============= GLOBAL FUNKSIYALAR REGISTRATSIYASI =============
 window.registerUser = registerUser;
 window.initTest = initTest;
 window.submitAnswer = submitAnswer;
@@ -916,3 +916,6 @@ window.finishTest = finishTest;
 window.showToast = showToast;
 
 console.log("✅ Barcha funksiyalar global qilindi!");
+console.log("✅ registerUser tipi:", typeof registerUser);
+console.log("✅ initTest tipi:", typeof initTest);
+console.log("✅ switchToPage tipi:", typeof switchToPage);
