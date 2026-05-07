@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -37,7 +37,7 @@
             border-radius: 16px;
             text-align: center;
         }
-        .stat-card .number { font-size: 36px; font-weight: bold; color: #667eea; }
+        .stat-card .number { font-size: 36px; font-weight: bold; color: #4f46e5; }
         .table-container {
             background: white;
             border-radius: 20px;
@@ -46,9 +46,17 @@
         }
         table { width: 100%; border-collapse: collapse; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e0e0e0; }
-        th { background: #f8f9fa; color: #667eea; }
+        th { background: #f8f9fa; color: #4f46e5; }
         .btn-danger {
-            background: #f44336;
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: #4f46e5;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -64,7 +72,11 @@
     <div class="container">
         <div class="header">
             <h1><i class="fas fa-chart-line"></i> MathAI Admin Panel</h1>
-            <button class="btn-danger" onclick="clearAllData()"><i class="fas fa-trash"></i> Barcha ma'lumotlarni tozalash</button>
+            <div>
+                <button class="btn-primary" onclick="exportToExcel()"><i class="fas fa-download"></i> Excel</button>
+                <button class="btn-danger" onclick="clearAllData()"><i class="fas fa-trash"></i> Tozalash</button>
+                <button class="btn-primary" onclick="window.location.href='/'"><i class="fas fa-home"></i> Bosh sahifa</button>
+            </div>
         </div>
         
         <div class="stats-grid">
@@ -93,9 +105,10 @@
             document.getElementById("avgScore").innerText = Math.round(avg) + "%";
             
             const tbody = document.getElementById("resultsTable");
-            tbody.innerHTML = results.reverse().map((r,i) => `
+            tbody.innerHTML = results.reverse().slice(0, 50).map((r,i) => `
                 <tr>
-                    <td>${i+1}</td><td>${r.name}</td>
+                    <td>${i+1}</td>
+                    <td>${r.name}</td>
                     <td>${r.score}/${r.maxScore}</td>
                     <td>${r.weakTopics?.join(", ") || "-"}</td>
                     <td>${r.timeSpent} sek</td>
@@ -111,6 +124,19 @@
                 loadData();
                 alert("✅ Tozalandi!");
             }
+        }
+        
+        function exportToExcel() {
+            const results = JSON.parse(localStorage.getItem("mathai_results")) || [];
+            let csv = "№,O'quvchi,Ball,Zaif mavzular,Vaqt,Sana\n";
+            results.forEach((r,i) => {
+                csv += `${i+1},${r.name},${r.score}/${r.maxScore},"${r.weakTopics?.join(", ") || ""}",${r.timeSpent} sek,${r.date}\n`;
+            });
+            const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "mathai_results.csv";
+            link.click();
         }
         
         loadData();
