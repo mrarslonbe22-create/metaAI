@@ -3,22 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MathAI | Abituriyentlar uchun sun'iy intellekt</title>
+    <title>MathAI | Sun'iy intellekt yordamida matematika</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
         }
-
         body.dark-mode {
             background: #1a1a2e;
         }
@@ -32,7 +26,8 @@
         body.dark-mode .question-container,
         body.dark-mode .topic-card,
         body.dark-mode .ai-chat-container,
-        body.dark-mode .result-card {
+        body.dark-mode .result-card,
+        body.dark-mode .test-header {
             background: #0f3460;
             color: #eee;
         }
@@ -47,12 +42,10 @@
         body.dark-mode .message.user .message-content {
             background: #4f46e5;
         }
-
         .app-container {
             display: flex;
             min-height: 100vh;
         }
-
         .sidebar {
             width: 280px;
             background: rgba(255,255,255,0.98);
@@ -65,7 +58,6 @@
             height: 100vh;
             z-index: 100;
         }
-
         .sidebar .logo {
             display: flex;
             align-items: center;
@@ -77,7 +69,6 @@
         }
         .sidebar .logo i { color: #4f46e5; font-size: 28px; }
         .sidebar .logo span { background: linear-gradient(135deg, #4f46e5, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
         .nav-menu {
             flex: 1;
             display: flex;
@@ -97,7 +88,6 @@
         }
         .nav-item:hover { background: #f1f5f9; color: #4f46e5; }
         .nav-item.active { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; }
-
         .user-info {
             margin-top: 20px;
             padding: 16px;
@@ -118,8 +108,8 @@
             color: white;
         }
         .user-name { font-weight: 600; color: #1e293b; }
+        body.dark-mode .user-name { color: white; }
         .user-level { font-size: 12px; color: #64748b; }
-
         .main-content {
             flex: 1;
             margin-left: 280px;
@@ -137,11 +127,9 @@
         }
         .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; }
         .icon-btn { background: none; border: none; font-size: 18px; cursor: pointer; padding: 8px; border-radius: 8px; }
-
         .page { display: none; animation: fadeIn 0.3s; }
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
         .btn {
             padding: 10px 24px;
             border: none;
@@ -158,7 +146,7 @@
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(79,70,229,0.2); }
         .btn-outline { background: transparent; border: 1.5px solid #4f46e5; color: #4f46e5; }
         .btn-outline:hover { background: #4f46e5; color: white; }
-
+        .btn-danger { background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
         .card { background: white; border-radius: 20px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         .stat-card {
             background: white;
@@ -170,14 +158,12 @@
         }
         .stat-value { font-size: 28px; font-weight: bold; color: #1e293b; }
         .stat-label { font-size: 14px; color: #64748b; }
-
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
-
         .hero-section {
             background: white;
             border-radius: 24px;
@@ -186,7 +172,6 @@
             margin-bottom: 30px;
         }
         .hero-section h1 { font-size: 42px; margin-bottom: 16px; }
-
         .test-header {
             background: white;
             padding: 20px;
@@ -201,7 +186,6 @@
         .timer-box { background: #fee2e2; color: #dc2626; padding: 8px 20px; border-radius: 40px; font-weight: 700; font-size: 24px; }
         .progress-bar { background: #e2e8f0; height: 8px; border-radius: 10px; margin-top: 5px; overflow: hidden; }
         #testProgressBar { background: linear-gradient(90deg, #10b981, #4f46e5); height: 100%; transition: width 0.3s; }
-
         .question-container {
             background: white;
             border-radius: 24px;
@@ -221,7 +205,6 @@
             display: block;
         }
         .test-actions { display: flex; gap: 15px; justify-content: center; margin-bottom: 20px; }
-
         .explanation-box {
             background: #f0fdf4;
             border-radius: 16px;
@@ -229,7 +212,6 @@
             margin-top: 20px;
             border-left: 4px solid #10b981;
         }
-
         .topics-grid, .lessons-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -246,7 +228,6 @@
         }
         .topic-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .topic-card i { font-size: 32px; color: #4f46e5; margin-bottom: 12px; }
-
         .ai-chat-container {
             background: white;
             border-radius: 20px;
@@ -282,7 +263,6 @@
             gap: 12px;
         }
         .chat-input-area input { flex: 1; padding: 12px; border: 1px solid #e2e8f0; border-radius: 12px; }
-
         .modal {
             display: none;
             position: fixed;
@@ -304,7 +284,6 @@
             overflow-y: auto;
             padding: 30px;
         }
-
         .result-card {
             background: white;
             border-radius: 24px;
@@ -314,14 +293,12 @@
         .score-number { font-size: 72px; font-weight: bold; color: #4f46e5; }
         .weak-topics-list { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0; }
         .weak-topic { background: #fee2e2; color: #dc2626; padding: 6px 14px; border-radius: 20px; cursor: pointer; }
-
         @media (max-width: 768px) {
             .sidebar { left: -280px; }
             .sidebar.open { left: 0; }
             .menu-toggle { display: block; }
             .main-content { margin-left: 0; padding: 16px; }
         }
-
         .toast {
             position: fixed;
             bottom: 20px;
@@ -332,14 +309,35 @@
             font-weight: 500;
             z-index: 2000;
             animation: slideIn 0.3s ease;
+            background: #4f46e5;
         }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+        .close-modal {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .table-container {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e0e0e0; }
+        th { background: #f8f9fa; color: #4f46e5; }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="logo"><i class="fas fa-brain"></i><span>MathAI</span></div>
             <nav class="nav-menu">
@@ -348,11 +346,12 @@
                 <a href="#" class="nav-item" data-page="statistics"><i class="fas fa-chart-line"></i><span>Statistika</span></a>
                 <a href="#" class="nav-item" data-page="lessons"><i class="fas fa-book"></i><span>Darslar</span></a>
                 <a href="#" class="nav-item" data-page="ai"><i class="fas fa-robot"></i><span>AI yordamchi</span></a>
+                <a href="#" class="nav-item" data-page="admin"><i class="fas fa-user-shield"></i><span>Admin</span></a>
             </nav>
             <div class="user-info">
                 <div class="avatar"><i class="fas fa-user-graduate"></i></div>
                 <div class="user-details">
-                    <span class="user-name" id="sidebarUserName">Guest</span>
+                    <span class="user-name" id="sidebarUserName">Mehmon</span>
                     <span class="user-level" id="sidebarUserLevel">🎯 Daraja 1</span>
                 </div>
             </div>
@@ -361,7 +360,6 @@
             </button>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
             <header class="main-header">
                 <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
@@ -410,7 +408,6 @@
                     <div class="test-header">
                         <div class="timer-box"><i class="fas fa-hourglass-half"></i> <span id="timer">15:00</span></div>
                         <div class="progress-info"><span id="questionCounter">1</span> / <span id="totalQuestions">20</span><div class="progress-bar"><div id="testProgressBar" style="width:0%"></div></div></div>
-                        <div class="level-indicator"><i class="fas fa-chart-line"></i> Daraja: <span id="currentLevelBadge">1</span></div>
                     </div>
                     <div class="question-container" id="questionContainer"></div>
                     <div class="test-actions">
@@ -464,12 +461,601 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Admin Page -->
+            <div id="adminPage" class="page">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-value" id="adminTotalStudents">0</div><div>O'quvchilar</div></div>
+                    <div class="stat-card"><div class="stat-value" id="adminTotalTests">0</div><div>Jami testlar</div></div>
+                    <div class="stat-card"><div class="stat-value" id="adminAvgScore">0%</div><div>O'rtacha ball</div></div>
+                </div>
+                <div class="table-container">
+                    <h3>📋 Test natijalari</h3>
+                    <button class="btn btn-primary" onclick="exportToExcel()" style="margin-bottom:15px;"><i class="fas fa-download"></i> Excel yuklash</button>
+                    <button class="btn btn-danger" onclick="clearAllData()" style="margin-bottom:15px; margin-left:10px;"><i class="fas fa-trash"></i> Tozalash</button>
+                    <table style="width:100%">
+                        <thead><tr><th>#</th><th>O'quvchi</th><th>Ball</th><th>Zaif mavzular</th><th>Vaqt</th><th>Sana</th></tr></thead>
+                        <tbody id="adminResultsTable"></tbody>
+                    </table>
+                </div>
+            </div>
         </main>
     </div>
-    <!-- Modal -->
+
     <div id="lessonModal" class="modal"><div class="modal-content"><div class="modal-header"><h2 id="modalTitle"></h2><button class="close-modal" onclick="closeLessonModal()">&times;</button></div><div id="modalBody"></div></div></div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // =============== TEST SAVOLLARI ===============
+        const testQuestions = [
+            { question: "2 + 2 = ?", answer: 4, topic: "Qo'shish", explanation: "2+2=4" },
+            { question: "5 × 3 = ?", answer: 15, topic: "Ko'paytirish", explanation: "5×3=15" },
+            { question: "10 ÷ 2 = ?", answer: 5, topic: "Bo'lish", explanation: "10÷2=5" },
+            { question: "12 - 7 = ?", answer: 5, topic: "Ayirish", explanation: "12-7=5" },
+            { question: "√16 = ?", answer: 4, topic: "Ildiz", explanation: "16 ning kvadrat ildizi 4" },
+            { question: "3² = ?", answer: 9, topic: "Daraja", explanation: "3 ning kvadrati 9" },
+            { question: "8 + 12 = ?", answer: 20, topic: "Qo'shish", explanation: "8+12=20" },
+            { question: "25 ÷ 5 = ?", answer: 5, topic: "Bo'lish", explanation: "25÷5=5" },
+            { question: "7 × 6 = ?", answer: 42, topic: "Ko'paytirish", explanation: "7×6=42" },
+            { question: "100 - 45 = ?", answer: 55, topic: "Ayirish", explanation: "100-45=55" },
+            { question: "√81 = ?", answer: 9, topic: "Ildiz", explanation: "81 ning kvadrat ildizi 9" },
+            { question: "4³ = ?", answer: 64, topic: "Daraja", explanation: "4 ning kubi 64" },
+            { question: "15 + 28 = ?", answer: 43, topic: "Qo'shish", explanation: "15+28=43" },
+            { question: "144 ÷ 12 = ?", answer: 12, topic: "Bo'lish", explanation: "144÷12=12" },
+            { question: "9 × 11 = ?", answer: 99, topic: "Ko'paytirish", explanation: "9×11=99" },
+            { question: "50 - 23 = ?", answer: 27, topic: "Ayirish", explanation: "50-23=27" },
+            { question: "√144 = ?", answer: 12, topic: "Ildiz", explanation: "144 ning kvadrat ildizi 12" },
+            { question: "2⁵ = ?", answer: 32, topic: "Daraja", explanation: "2 ning 5-darajasi 32" },
+            { question: "34 + 47 = ?", answer: 81, topic: "Qo'shish", explanation: "34+47=81" },
+            { question: "200 ÷ 8 = ?", answer: 25, topic: "Bo'lish", explanation: "200÷8=25" }
+        ];
+
+        // =============== GLOBAL VARIABLES ===============
+        let currentUser = null;
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let testStartTime = null;
+        let timerInterval = null;
+        let timeLeft = 900;
+        let topicsChart = null;
+
+        // =============== UTILITY FUNCTIONS ===============
+        function showToast(message, isError = false) {
+            const toast = document.createElement("div");
+            toast.className = "toast";
+            toast.style.background = isError ? "#ef4444" : "#4f46e5";
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // =============== USER MANAGEMENT ===============
+        function registerUser() {
+            const firstName = document.getElementById("regFirstName").value.trim();
+            const lastName = document.getElementById("regLastName").value.trim();
+            if (!firstName || !lastName) {
+                showToast("Iltimos, ism va familiyangizni kiriting!", true);
+                return;
+            }
+            const fullName = `${firstName} ${lastName}`;
+            currentUser = {
+                name: fullName,
+                level: 1,
+                tests: [],
+                createdAt: new Date().toISOString()
+            };
+            localStorage.setItem("mathai_current_user", JSON.stringify(currentUser));
+            saveUserToStorage(fullName);
+            document.getElementById("registrationPage").classList.remove("active");
+            document.getElementById("homePage").classList.add("active");
+            updateUserInfo();
+            updateHomeStats();
+            loadTopicsGrid();
+            showToast(`Xush kelibsiz, ${firstName}!`);
+        }
+
+        function saveUserToStorage(userName) {
+            let users = JSON.parse(localStorage.getItem("mathai_users")) || {};
+            if (!users[userName]) {
+                users[userName] = { name: userName, tests: [], createdAt: new Date().toISOString() };
+                localStorage.setItem("mathai_users", JSON.stringify(users));
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("mathai_current_user");
+            currentUser = null;
+            document.getElementById("homePage").classList.remove("active");
+            document.getElementById("statisticsPage").classList.remove("active");
+            document.getElementById("testPage").classList.remove("active");
+            document.getElementById("lessonsPage").classList.remove("active");
+            document.getElementById("aiPage").classList.remove("active");
+            document.getElementById("adminPage").classList.remove("active");
+            document.getElementById("registrationPage").classList.add("active");
+            document.getElementById("regFirstName").value = "";
+            document.getElementById("regLastName").value = "";
+        }
+
+        function updateUserInfo() {
+            if (currentUser) {
+                document.getElementById("sidebarUserName").innerText = currentUser.name;
+                document.getElementById("sidebarUserLevel").innerHTML = `🎯 Daraja ${currentUser.level}`;
+            }
+        }
+
+        function updateHomeStats() {
+            if (!currentUser) return;
+            const results = JSON.parse(localStorage.getItem("mathai_results")) || [];
+            const userResults = results.filter(r => r.name === currentUser.name);
+            document.getElementById("totalTestsCount").innerText = userResults.length;
+            let avg = 0;
+            if (userResults.length > 0) {
+                avg = userResults.reduce((s, r) => s + (r.score / r.maxScore * 100), 0) / userResults.length;
+            }
+            document.getElementById("avgScorePercent").innerText = Math.round(avg) + "%";
+            document.getElementById("currentLevel").innerText = currentUser.level;
+            
+            let streak = JSON.parse(localStorage.getItem("mathai_streak")) || {};
+            document.getElementById("streakDays").innerText = streak[currentUser.name] || 0;
+        }
+
+        // =============== TEST FUNCTIONS ===============
+        function initTest() {
+            if (!currentUser) {
+                showToast("Iltimos, avval ro'yxatdan o'ting!", true);
+                return;
+            }
+            currentQuestions = shuffleArray([...testQuestions]).slice(0, 20);
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            testStartTime = Date.now();
+            timeLeft = 900;
+            
+            document.getElementById("testStartSection").style.display = "none";
+            document.getElementById("testActiveSection").style.display = "block";
+            document.getElementById("testResultSection").style.display = "none";
+            document.getElementById("explanationBox").style.display = "none";
+            
+            startTimer();
+            loadQuestion();
+        }
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishTest();
+                } else {
+                    timeLeft--;
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    document.getElementById("timer").innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            const q = currentQuestions[currentQuestionIndex];
+            document.getElementById("questionContainer").innerHTML = `
+                <div class="question-text">${q.question}</div>
+                <input type="number" id="answerInput" class="question-input" placeholder="Javobingizni kiriting" autocomplete="off">
+            `;
+            document.getElementById("questionCounter").innerText = currentQuestionIndex + 1;
+            document.getElementById("totalQuestions").innerText = currentQuestions.length;
+            const progress = ((currentQuestionIndex) / currentQuestions.length) * 100;
+            document.getElementById("testProgressBar").style.width = `${progress}%`;
+            document.getElementById("explanationBox").style.display = "none";
+            document.getElementById("answerInput").focus();
+        }
+
+        function submitAnswer() {
+            const answerInput = document.getElementById("answerInput");
+            const userAnswer = parseInt(answerInput.value);
+            if (isNaN(userAnswer)) {
+                showToast("Iltimos, raqam kiriting!", true);
+                return;
+            }
+            
+            const currentQ = currentQuestions[currentQuestionIndex];
+            const isCorrect = userAnswer === currentQ.answer;
+            
+            userAnswers.push({
+                question: currentQ.question,
+                userAnswer: userAnswer,
+                correctAnswer: currentQ.answer,
+                isCorrect: isCorrect,
+                topic: currentQ.topic,
+                explanation: currentQ.explanation
+            });
+            
+            document.getElementById("explanationContent").innerHTML = `
+                <strong>${isCorrect ? "✅ To'g'ri!" : "❌ Xato!"}</strong><br>
+                To'g'ri javob: ${currentQ.answer}<br>
+                <strong>Izoh:</strong> ${currentQ.explanation}
+            `;
+            document.getElementById("explanationBox").style.display = "block";
+            
+            if (currentQuestionIndex + 1 < currentQuestions.length) {
+                currentQuestionIndex++;
+                setTimeout(() => loadQuestion(), 2000);
+            } else {
+                setTimeout(() => finishTest(), 2000);
+            }
+        }
+
+        function skipQuestion() {
+            userAnswers.push({
+                question: currentQuestions[currentQuestionIndex].question,
+                userAnswer: null,
+                correctAnswer: currentQuestions[currentQuestionIndex].answer,
+                isCorrect: false,
+                topic: currentQuestions[currentQuestionIndex].topic,
+                explanation: currentQuestions[currentQuestionIndex].explanation
+            });
+            
+            if (currentQuestionIndex + 1 < currentQuestions.length) {
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                finishTest();
+            }
+        }
+
+        function finishTest() {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            const score = userAnswers.filter(a => a.isCorrect).length;
+            const maxScore = userAnswers.length;
+            const percentage = (score / maxScore) * 100;
+            const timeSpent = Math.floor((Date.now() - testStartTime) / 1000);
+            
+            const weakTopics = [];
+            const topicCount = {};
+            userAnswers.forEach(a => {
+                if (!a.isCorrect && a.topic) {
+                    topicCount[a.topic] = (topicCount[a.topic] || 0) + 1;
+                }
+            });
+            for (let topic in topicCount) {
+                if (topicCount[topic] >= 2) weakTopics.push(topic);
+            }
+            
+            const result = {
+                name: currentUser.name,
+                score: score,
+                maxScore: maxScore,
+                percentage: percentage,
+                weakTopics: weakTopics,
+                timeSpent: timeSpent,
+                date: new Date().toLocaleString(),
+                answers: userAnswers
+            };
+            
+            let results = JSON.parse(localStorage.getItem("mathai_results")) || [];
+            results.push(result);
+            localStorage.setItem("mathai_results", results);
+            
+            currentUser.tests.push(result);
+            if (percentage >= 70 && currentUser.level < 5) {
+                currentUser.level++;
+                showToast(`🎉 Tabriklaymiz! ${currentUser.level}-darajaga ko'tarildingiz!`);
+            }
+            localStorage.setItem("mathai_current_user", JSON.stringify(currentUser));
+            
+            document.getElementById("testActiveSection").style.display = "none";
+            document.getElementById("testResultSection").style.display = "block";
+            document.getElementById("resultScore").innerText = score;
+            document.getElementById("resultPercentage").innerText = percentage + "%";
+            
+            let greeting = "";
+            if (percentage >= 80) greeting = "Ajoyib! 🎉";
+            else if (percentage >= 60) greeting = "Yaxshi! 👍";
+            else greeting = "Keyingi safar yaxshiroq natija ko'rsating! 💪";
+            document.getElementById("resultGreeting").innerHTML = greeting;
+            
+            let weakHtml = '<div class="weak-topics-list">';
+            weakTopics.forEach(t => {
+                weakHtml += `<span class="weak-topic" onclick="switchToPage('lessons')">📚 ${t}</span>`;
+            });
+            weakHtml += '</div>';
+            document.getElementById("weakTopicsList").innerHTML = weakTopics.length ? weakHtml : "<p>Zaif mavzular yo'q! 👍</p>";
+            
+            updateHomeStats();
+            updateAdminPanel();
+            updateStatisticsPage();
+        }
+
+        function restartTest() {
+            document.getElementById("testResultSection").style.display = "none";
+            document.getElementById("testStartSection").style.display = "block";
+            initTest();
+        }
+
+        // =============== AI CHAT ===============
+        function sendChatMessage() {
+            const input = document.getElementById("chatInput");
+            const message = input.value.trim();
+            if (!message) return;
+            
+            const chatMessages = document.getElementById("chatMessages");
+            chatMessages.innerHTML += `
+                <div class="message user">
+                    <div class="message-avatar"><i class="fas fa-user"></i></div>
+                    <div class="message-content"><p>${escapeHtml(message)}</p></div>
+                </div>
+            `;
+            input.value = "";
+            
+            setTimeout(() => {
+                let reply = getAIResponse(message);
+                chatMessages.innerHTML += `
+                    <div class="message bot">
+                        <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                        <div class="message-content"><p>${reply}</p></div>
+                    </div>
+                `;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 500);
+        }
+
+        function getAIResponse(question) {
+            const q = question.toLowerCase();
+            if (q.includes("kvadrat") || q.includes("ildiz")) {
+                return "Kvadrat ildiz - bu sonning o'ziga ko'paytirilganda berilgan sonni beradigan qiymat. Masalan, √16 = 4, chunki 4×4=16.";
+            } else if (q.includes("kasr")) {
+                return "Kasrlar - bu butun sonning bir qismi. Masalan, 1/2 = 0.5. Kasrlarni qo'shish uchun maxrajlarni tenglashtirish kerak.";
+            } else if (q.includes("foiz")) {
+                return "Foiz - bu 100 ning ulushi. Masalan, 50% = 50/100 = 0.5. Foizni topish uchun (qism/butun)×100 formula ishlatiladi.";
+            } else if (q.includes("tenglama")) {
+                return "Tenglama - bu noma'lum o'zgaruvchini topish kerak bo'lgan matematik ifoda. Masalan, x + 5 = 10 → x = 5.";
+            } else {
+                return "Matematik savolingizni aniqroq yozing. Men kvadrat ildiz, kasrlar, foizlar, tenglamalar va boshqa mavzularda yordam bera olaman! 😊";
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // =============== LESSONS ===============
+        const lessons = {
+            "Qo'shish": "Qo'shish - ikki yoki undan ortiq sonlarni birlashtirish amali. Masalan: 5 + 3 = 8",
+            "Ayirish": "Ayirish - bir sondan ikkinchi sonni chiqarish. Masalan: 10 - 4 = 6",
+            "Ko'paytirish": "Ko'paytirish - sonni o'ziga necha marta qo'shish. Masalan: 4 × 3 = 12",
+            "Bo'lish": "Bo'lish - sonni teng qismlarga ajratish. Masalan: 15 ÷ 3 = 5",
+            "Ildiz": "Kvadrat ildiz - sonning o'ziga ko'paytirilganda berilgan sonni beradigan qiymat. Masalan: √25 = 5",
+            "Daraja": "Daraja - sonni necha marta o'ziga ko'paytirish. Masalan: 2³ = 2×2×2 = 8"
+        };
+
+        function loadTopicsGrid() {
+            const grid = document.getElementById("topicsGrid");
+            grid.innerHTML = "";
+            for (let topic in lessons) {
+                grid.innerHTML += `
+                    <div class="topic-card" onclick="showLesson('${topic}')">
+                        <i class="fas fa-calculator"></i>
+                        <h4>${topic}</h4>
+                    </div>
+                `;
+            }
+        }
+
+        function showLesson(topic) {
+            document.getElementById("modalTitle").innerText = topic;
+            document.getElementById("modalBody").innerHTML = `<p>${lessons[topic]}</p>`;
+            document.getElementById("lessonModal").style.display = "flex";
+        }
+
+        function closeLessonModal() {
+            document.getElementById("lessonModal").style.display = "none";
+        }
+
+        function loadLessonsGrid() {
+            const grid = document.getElementById("lessonsGrid");
+            grid.innerHTML = "";
+            for (let topic in lessons) {
+                grid.innerHTML += `
+                    <div class="topic-card" onclick="showLesson('${topic}')">
+                        <i class="fas fa-book-open"></i>
+                        <h4>${topic}</h4>
+                        <p style="font-size:12px; margin-top:10px;">${lessons[topic].substring(0, 50)}...</p>
+                    </div>
+                `;
+            }
+        }
+
+        // =============== STATISTICS ===============
+        function updateStatisticsPage() {
+            const results = JSON.parse(localStorage.getItem("mathai_results")) || [];
+            const userResults = results.filter(r => r.name === currentUser?.name);
+            
+            const topicScores = {};
+            userResults.forEach(result => {
+                result.answers?.forEach(answer => {
+                    if (answer.topic) {
+                        if (!topicScores[answer.topic]) {
+                            topicScores[answer.topic] = { correct: 0, total: 0 };
+                        }
+                        topicScores[answer.topic].total++;
+                        if (answer.isCorrect) topicScores[answer.topic].correct++;
+                    }
+                });
+            });
+            
+            if (topicsChart) topicsChart.destroy();
+            const ctx = document.getElementById("topicsChart").getContext("2d");
+            topicsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(topicScores),
+                    datasets: [{
+                        label: 'Mavzu bo\'yicha natija (%)',
+                        data: Object.values(topicScores).map(t => (t.correct / t.total) * 100),
+                        backgroundColor: '#4f46e5'
+                    }]
+                }
+            });
+            
+            const recentList = document.getElementById("recentTestsList");
+            recentList.innerHTML = userResults.slice(-5).reverse().map(r => `
+                <div style="padding:10px; border-bottom:1px solid #ddd;">
+                    <strong>${r.date}</strong> - ${r.score}/${r.maxScore} (${r.percentage}%)
+                </div>
+            `).join('');
+        }
+
+        // =============== ADMIN PANEL ===============
+        function updateAdminPanel() {
+            const results = JSON.parse(localStorage.getItem("mathai_results")) || [];
+            const users = JSON.parse(localStorage.getItem("mathai_users")) || {};
+            
+            document.getElementById("adminTotalStudents").innerText = Object.keys(users).length;
+            document.getElementById("adminTotalTests").innerText = results.length;
+            let avg = results.length ? results.reduce((s, r) => s + (r.score / r.maxScore * 100), 0) / results.length : 0;
+            document.getElementById("adminAvgScore").innerText = Math.round(avg) + "%";
+            
+            const tbody = document.getElementById("adminResultsTable");
+            tbody.innerHTML = results.slice().reverse().slice(0, 50).map((r, i) => `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${r.name}</td>
+                    <td>${r.score}/${r.maxScore}</td>
+                    <td>${r.weakTopics?.join(", ") || "-"}</td>
+                    <td>${r.timeSpent} sek</td>
+                    <td>${r.date}</td>
+                </tr>
+            `).join('');
+        }
+
+        function exportToExcel() {
+            const results = JSON.parse(localStorage.getItem("mathai_results")) || [];
+            let csv = "№,O'quvchi,Ball,Zaif mavzular,Vaqt,Sana\n";
+            results.forEach((r, i) => {
+                csv += `${i + 1},${r.name},${r.score}/${r.maxScore},"${r.weakTopics?.join(", ") || ""}",${r.timeSpent} sek,${r.date}\n`;
+            });
+            const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "mathai_results.csv";
+            link.click();
+            showToast("Excel fayli yuklandi!");
+        }
+
+        function clearAllData() {
+            if (confirm("⚠️ Barcha ma'lumotlar o'chiriladi! Davom etasizmi?")) {
+                localStorage.removeItem("mathai_results");
+                localStorage.removeItem("mathai_users");
+                localStorage.removeItem("mathai_current_user");
+                localStorage.removeItem("mathai_streak");
+                showToast("✅ Barcha ma'lumotlar tozalandi!");
+                setTimeout(() => location.reload(), 1500);
+            }
+        }
+
+        // =============== PAGE NAVIGATION ===============
+        function switchToPage(pageName) {
+            if (!currentUser && pageName !== 'admin' && pageName !== 'registrationPage') {
+                showToast("Iltimos, avval ro'yxatdan o'ting!", true);
+                return;
+            }
+            
+            const pages = ['homePage', 'testPage', 'statisticsPage', 'lessonsPage', 'aiPage', 'adminPage', 'registrationPage'];
+            pages.forEach(p => {
+                const el = document.getElementById(p);
+                if (el) el.classList.remove('active');
+            });
+            
+            let targetPage = pageName + 'Page';
+            if (pageName === 'home') targetPage = 'homePage';
+            else if (pageName === 'test') targetPage = 'testPage';
+            else if (pageName === 'statistics') targetPage = 'statisticsPage';
+            else if (pageName === 'lessons') targetPage = 'lessonsPage';
+            else if (pageName === 'ai') targetPage = 'aiPage';
+            else if (pageName === 'admin') targetPage = 'adminPage';
+            
+            document.getElementById(targetPage).classList.add('active');
+            
+            if (pageName === 'statistics') updateStatisticsPage();
+            if (pageName === 'admin') updateAdminPanel();
+            if (pageName === 'lessons') loadLessonsGrid();
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-page') === pageName) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        // =============== DARK MODE ===============
+        const themeToggle = document.getElementById("themeToggle");
+        themeToggle.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            const icon = themeToggle.querySelector("i");
+            if (document.body.classList.contains("dark-mode")) {
+                icon.classList.remove("fa-moon");
+                icon.classList.add("fa-sun");
+            } else {
+                icon.classList.remove("fa-sun");
+                icon.classList.add("fa-moon");
+            }
+        });
+
+        // =============== SIDEBAR TOGGLE ===============
+        document.getElementById("menuToggle").addEventListener("click", () => {
+            document.getElementById("sidebar").classList.toggle("open");
+        });
+
+        // =============== NAVIGATION SETUP ===============
+        document.querySelectorAll(".nav-item").forEach(item => {
+            item.addEventListener("click", (e) => {
+                e.preventDefault();
+                const page = item.getAttribute("data-page");
+                switchToPage(page);
+            });
+        });
+
+        // =============== CHECK LOGIN STATUS ===============
+        function checkLoginStatus() {
+            const savedUser = localStorage.getItem("mathai_current_user");
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                document.getElementById("registrationPage").classList.remove("active");
+                document.getElementById("homePage").classList.add("active");
+                updateUserInfo();
+                updateHomeStats();
+                loadTopicsGrid();
+            }
+        }
+
+        // =============== SEARCH LESSONS ===============
+        document.getElementById("lessonSearch")?.addEventListener("input", function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const grid = document.getElementById("lessonsGrid");
+            const cards = grid.querySelectorAll(".topic-card");
+            cards.forEach(card => {
+                const title = card.querySelector("h4")?.innerText.toLowerCase() || "";
+                if (title.includes(searchTerm)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+
+        checkLoginStatus();
+    </script>
 </body>
 </html>
